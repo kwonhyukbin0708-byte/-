@@ -14,9 +14,10 @@ interface HeaderProps {
   currentSection: string;
   setCurrentSection: (section: string) => void;
   theme: any; // theme color object
+  showAdminMenu?: boolean;
 }
 
-export default function Header({ config, currentSection, setCurrentSection, theme }: HeaderProps) {
+export default function Header({ config, currentSection, setCurrentSection, theme, showAdminMenu = false }: HeaderProps) {
   const [isMobileOpen, setIsMobileOpen] = useState(false);
 
   const navItems = [
@@ -84,33 +85,37 @@ export default function Header({ config, currentSection, setCurrentSection, them
           </nav>
 
           {/* Right Controls (Admin Portal Access) */}
-          <div className="hidden md:flex items-center space-x-4">
-            <button
-              id="nav-btn-admin"
-              onClick={() => handleNavClick('admin')}
-              className={`flex items-center space-x-1 px-4 py-2 rounded-lg text-xs font-medium border cursor-pointer transition-all duration-200 ${
-                currentSection === 'admin'
-                  ? `${theme.primary} text-white border-transparent`
-                  : 'text-gray-600 bg-gray-50 hover:bg-gray-100 border-gray-200'
-              }`}
-            >
-              <Settings className="w-3.5 h-3.5" />
-              <span>관리자 시스템</span>
-            </button>
-          </div>
+          {showAdminMenu && (
+            <div className="hidden md:flex items-center space-x-4">
+              <button
+                id="nav-btn-admin"
+                onClick={() => handleNavClick('admin')}
+                className={`flex items-center space-x-1 px-4 py-2 rounded-lg text-xs font-medium border cursor-pointer transition-all duration-200 ${
+                  currentSection === 'admin'
+                    ? `${theme.primary} text-white border-transparent`
+                    : 'text-gray-600 bg-gray-50 hover:bg-gray-100 border-gray-200'
+                }`}
+              >
+                <Settings className="w-3.5 h-3.5" />
+                <span>관리자 시스템</span>
+              </button>
+            </div>
+          )}
 
           {/* Mobile menu button */}
           <div className="flex md:hidden items-center space-x-2">
-            <button
-              id="mobile-admin-quick-btn"
-              onClick={() => handleNavClick('admin')}
-              className={`p-2 rounded-lg border cursor-pointer ${
-                currentSection === 'admin' ? `${theme.primary} text-white` : 'text-gray-500 bg-gray-50'
-              }`}
-              title="관리자 설정"
-            >
-              <Settings className="w-4 h-4" />
-            </button>
+            {showAdminMenu && (
+              <button
+                id="mobile-admin-quick-btn"
+                onClick={() => handleNavClick('admin')}
+                className={`p-2 rounded-lg border cursor-pointer ${
+                  currentSection === 'admin' ? `${theme.primary} text-white` : 'text-gray-500 bg-gray-50'
+                }`}
+                title="관리자 설정"
+              >
+                <Settings className="w-4 h-4" />
+              </button>
+            )}
             <button
               id="mobile-menu-toggle"
               onClick={() => setIsMobileOpen(!isMobileOpen)}
@@ -150,20 +155,22 @@ export default function Header({ config, currentSection, setCurrentSection, them
                   </button>
                 );
               })}
-              <div className="pt-4 mt-2 border-t border-gray-100">
-                <button
-                  id="mobile-nav-btn-admin"
-                  onClick={() => handleNavClick('admin')}
-                  className={`flex items-center justify-center space-x-2 w-full px-4 py-3 rounded-lg text-sm font-semibold border cursor-pointer transition-all ${
-                    currentSection === 'admin'
-                      ? `${theme.primary} text-white border-transparent`
-                      : 'text-gray-700 bg-gray-50 border-gray-200 hover:bg-gray-100'
-                  }`}
-                >
-                  <Settings className="w-4 h-4" />
-                  <span>관리자 대시보드 시스템</span>
-                </button>
-              </div>
+              {showAdminMenu && (
+                <div className="pt-4 mt-2 border-t border-gray-100">
+                  <button
+                    id="mobile-nav-btn-admin"
+                    onClick={() => handleNavClick('admin')}
+                    className={`flex items-center justify-center space-x-2 w-full px-4 py-3 rounded-lg text-sm font-semibold border cursor-pointer transition-all ${
+                      currentSection === 'admin'
+                        ? `${theme.primary} text-white border-transparent`
+                        : 'text-gray-700 bg-gray-50 border-gray-200 hover:bg-gray-100'
+                    }`}
+                  >
+                    <Settings className="w-4 h-4" />
+                    <span>관리자 대시보드 시스템</span>
+                  </button>
+                </div>
+              )}
             </div>
           </motion.div>
         )}

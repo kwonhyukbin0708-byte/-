@@ -37,7 +37,7 @@ export default function ContactSection({ config, inquiries, addInquiry, theme }:
   const budgetOptions = ['협의 후 결정', '월 1,000만원 미만', '월 1,000만원 ~ 3,000만원', '월 3,000만원 ~ 5,000만원', '월 5,000만원 이상'];
 
   // Handle inquiry submit
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setValidationError('');
 
@@ -50,30 +50,54 @@ export default function ContactSection({ config, inquiries, addInquiry, theme }:
 
     setIsSubmitting(true);
     
-    // Simulate minor network delay
-    setTimeout(() => {
-      const newInq = addInquiry({
-        companyName,
-        requester,
-        phone,
-        email,
-        serviceType,
-        budget,
-        message
+    try {
+      // Formspree API submission
+      const response = await fetch("https://formspree.io/f/mlgyjdjo", {
+        method: "POST",
+        headers: {
+          "Accept": "application/json",
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          "회사명": companyName,
+          "신청자명/직급": requester,
+          "연락처": phone,
+          "이메일": email,
+          "문의유형": serviceType,
+          "희망예산": budget,
+          "문의내용": message
+        })
       });
 
-      setSuccessTicket(newInq);
-      setIsSubmitting(false);
+      if (!response.ok) {
+        console.warn("Formspree submission responded with error:", response.status);
+      }
+    } catch (err) {
+      console.error("Failed to send data to Formspree:", err);
+    }
 
-      // Reset form fields
-      setCompanyName('');
-      setRequester('');
-      setPhone('');
-      setEmail('');
-      setServiceType('물류도급');
-      setBudget('협의 후 결정');
-      setMessage('');
-    }, 800);
+    // Always record locally so that the live status check and local database continues to work flawlessly
+    const newInq = addInquiry({
+      companyName,
+      requester,
+      phone,
+      email,
+      serviceType,
+      budget,
+      message
+    });
+
+    setSuccessTicket(newInq);
+    setIsSubmitting(false);
+
+    // Reset form fields
+    setCompanyName('');
+    setRequester('');
+    setPhone('');
+    setEmail('');
+    setServiceType('물류도급');
+    setBudget('협의 후 결정');
+    setMessage('');
   };
 
   // Status Checker Logic

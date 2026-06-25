@@ -16,11 +16,15 @@ import {
   Trash2,
   Edit,
   Eye,
+  EyeOff,
   RefreshCw,
   Phone,
   Bookmark,
   Calendar,
-  Sparkles
+  Sparkles,
+  Lock,
+  Unlock,
+  Key
 } from 'lucide-react';
 import { SiteConfig, Notice, Portfolio, Inquiry } from '../types';
 
@@ -52,6 +56,22 @@ export default function AdminSection({
   theme
 }: AdminSectionProps) {
   
+  // Admin authentication states
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [passcodeInput, setPasscodeInput] = useState('');
+  const [showPasscode, setShowPasscode] = useState(false);
+  const [authError, setAuthError] = useState('');
+
+  const handleAdminLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (passcodeInput === 'tnstns24!') {
+      setIsAuthenticated(true);
+      setAuthError('');
+    } else {
+      setAuthError('비밀번호가 올바르지 않습니다. 다시 입력해주세요.');
+    }
+  };
+
   // Tab states inside Admin Console
   const [activeSubTab, setActiveSubTab] = useState<'branding' | 'notices' | 'portfolios' | 'inquiries'>('branding');
 
@@ -198,6 +218,78 @@ export default function AdminSection({
     updatePortfolios(updated);
   };
 
+  if (!isAuthenticated) {
+    return (
+      <div id="admin-login-gate" className="bg-slate-50 py-20 min-h-[80vh] flex items-center justify-center px-4">
+        <div className="max-w-md w-full bg-white rounded-2xl border border-gray-100 shadow-xl overflow-hidden">
+          <div className={`p-6 ${theme.primary} text-white flex flex-col items-center text-center space-y-2`}>
+            <div className="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center backdrop-blur-sm">
+              <Lock className="w-6 h-6 text-white" />
+            </div>
+            <h3 className="text-xl font-bold tracking-tight">관리자 시스템 로그인</h3>
+            <p className="text-xs text-white/80">보안 구역 - 승인된 관리자만 진입할 수 있습니다.</p>
+          </div>
+          
+          <form onSubmit={handleAdminLogin} className="p-8 space-y-6">
+            <div className="space-y-2">
+              <label htmlFor="admin-passcode" className="block text-xs font-bold text-gray-500 uppercase tracking-wider">
+                관리자 비밀번호
+              </label>
+              <div className="relative rounded-xl shadow-sm">
+                <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
+                  <Key className="h-4 w-4 text-gray-400" />
+                </div>
+                <input
+                  id="admin-passcode"
+                  type={showPasscode ? 'text' : 'password'}
+                  value={passcodeInput}
+                  onChange={(e) => {
+                    setPasscodeInput(e.target.value);
+                    if (authError) setAuthError('');
+                  }}
+                  placeholder="비밀번호를 입력하세요"
+                  className="block w-full pl-10 pr-10 py-3 text-sm border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPasscode(!showPasscode)}
+                  className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600 transition-colors cursor-pointer"
+                >
+                  {showPasscode ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                </button>
+              </div>
+              {authError && (
+                <p className="text-xs font-semibold text-red-600 animate-pulse mt-1">
+                  {authError}
+                </p>
+              )}
+            </div>
+
+            <button
+              type="submit"
+              className={`w-full py-3.5 rounded-xl text-white font-semibold text-sm shadow-md hover:shadow-lg transition-all duration-200 cursor-pointer flex items-center justify-center space-x-2 ${theme.primary} ${theme.hover}`}
+            >
+              <Unlock className="w-4 h-4" />
+              <span>로그인 및 시스템 접속</span>
+            </button>
+
+            <div className="bg-slate-50 border border-slate-100 rounded-xl p-4 space-y-2.5">
+              <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-50 text-amber-700 border border-amber-100">
+                <Sparkles className="w-3 h-3" /> 관리자 비밀번호 안내
+              </span>
+              <p className="text-xs text-gray-500 leading-relaxed">
+                현재 설정된 관리자 비밀번호는 <strong className="text-gray-900 font-bold bg-amber-100 px-1 rounded">tnstns24!</strong> 입니다.
+              </p>
+              <div className="border-t border-dashed border-gray-200 my-2 pt-2 text-[10px] text-gray-400 leading-normal">
+                ※ 상용 프로덕션 환경 배포 시에는 백엔드 API 세션 제어(Firebase Auth, JWT 토큰 검증, CORS 도메인 체크) 및 데이터베이스 보안 규칙을 수립하여 외부인의 직접적인 접근을 원천 봉쇄하게 됩니다.
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div id="admin-suite" className="bg-slate-50 py-12 min-h-screen">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
@@ -217,13 +309,26 @@ export default function AdminSection({
             </p>
           </div>
 
-          <button
-            onClick={resetConfigToDefault}
-            className="flex items-center space-x-1.5 px-4.5 py-3 rounded-xl border border-gray-200 hover:bg-gray-50 text-gray-700 font-semibold text-xs cursor-pointer transition-colors shrink-0"
-          >
-            <RefreshCw className="w-3.5 h-3.5" />
-            <span>기본 설정값 복원</span>
-          </button>
+          <div className="flex flex-wrap items-center gap-3">
+            <button
+              onClick={resetConfigToDefault}
+              className="flex items-center space-x-1.5 px-4.5 py-3 rounded-xl border border-gray-200 hover:bg-gray-50 text-gray-700 font-semibold text-xs cursor-pointer transition-colors shrink-0"
+            >
+              <RefreshCw className="w-3.5 h-3.5" />
+              <span>기본 설정값 복원</span>
+            </button>
+
+            <button
+              onClick={() => {
+                setIsAuthenticated(false);
+                setPasscodeInput('');
+              }}
+              className="flex items-center space-x-1.5 px-4.5 py-3 rounded-xl bg-gray-950 hover:bg-gray-900 text-white font-semibold text-xs cursor-pointer transition-colors shrink-0 shadow-sm"
+            >
+              <Lock className="w-3.5 h-3.5" />
+              <span>안전 로그아웃</span>
+            </button>
+          </div>
         </div>
 
         {/* Real-time CMS Status Overview */}

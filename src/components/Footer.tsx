@@ -11,9 +11,10 @@ interface FooterProps {
   config: SiteConfig;
   setCurrentSection: (section: string) => void;
   theme: any;
+  showAdminMenu?: boolean;
 }
 
-export default function Footer({ config, setCurrentSection, theme }: FooterProps) {
+export default function Footer({ config, setCurrentSection, theme, showAdminMenu = false }: FooterProps) {
   const handleQuickLink = (sectionId: string) => {
     setCurrentSection(sectionId);
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -128,9 +129,11 @@ export default function Footer({ config, setCurrentSection, theme }: FooterProps
             <a href="#" className="hover:text-white transition-colors">이용약관</a>
             <a href="#" className="hover:text-white font-semibold text-slate-300 transition-colors">개인정보처리방침</a>
             <a href="#" className="hover:text-white transition-colors">이메일무단수집거부</a>
-            <button onClick={() => handleQuickLink('admin')} className="hover:text-white transition-colors text-slate-500 cursor-pointer">
-              관리자페이지로그인
-            </button>
+            {showAdminMenu && (
+              <button onClick={() => handleQuickLink('admin')} className="hover:text-white transition-colors text-slate-500 cursor-pointer">
+                관리자페이지로그인
+              </button>
+            )}
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-2 gap-x-4 border-t border-slate-800/50 pt-4">
             <p>상호: {config.companyNameEng} | 대표이사: {config.ceoName}</p>

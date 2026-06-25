@@ -71,6 +71,30 @@ export const COLOR_THEMES = {
 export default function App() {
   const [currentSection, setCurrentSection] = useState<string>('home');
 
+  // Hidden admin menu visibility state
+  const [showAdminMenu, setShowAdminMenu] = useState<boolean>(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const hasParam = urlParams.get('admin') === 'true' || urlParams.get('setup') === 'true';
+    const isSaved = localStorage.getItem('soonsoon_show_admin_menu') === 'true';
+    return hasParam || isSaved;
+  });
+
+  // Listen for Ctrl+Shift+A (or Cmd+Shift+A) to toggle admin button visibility
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key.toLowerCase() === 'a') {
+        e.preventDefault();
+        setShowAdminMenu((prev) => {
+          const next = !prev;
+          localStorage.setItem('soonsoon_show_admin_menu', next ? 'true' : 'false');
+          return next;
+        });
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
+
   // Core CMS state loaded from localStorage, falling back to constant defaults
   const [config, setConfig] = useState<SiteConfig>(() => {
     const saved = localStorage.getItem('soonsoon_config');
@@ -287,6 +311,7 @@ export default function App() {
         currentSection={currentSection}
         setCurrentSection={setCurrentSection}
         theme={activeTheme}
+        showAdminMenu={showAdminMenu}
       />
 
       {/* Main Container with smooth fading transitions */}
@@ -309,6 +334,7 @@ export default function App() {
         config={config}
         setCurrentSection={setCurrentSection}
         theme={activeTheme}
+        showAdminMenu={showAdminMenu}
       />
 
       {/* Notice Detail Modal Overlay */}
