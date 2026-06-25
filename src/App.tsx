@@ -76,7 +76,11 @@ export default function App() {
     const urlParams = new URLSearchParams(window.location.search);
     const hasParam = urlParams.get('admin') === 'true' || urlParams.get('setup') === 'true';
     const isSaved = localStorage.getItem('soonsoon_show_admin_menu');
-    if (isSaved === null) return true; // Default to true as requested by the user
+    if (isSaved === null || isSaved === 'true') {
+      // Force disable/hide it now as requested by the user
+      localStorage.setItem('soonsoon_show_admin_menu', 'false');
+      return hasParam;
+    }
     return hasParam || isSaved === 'true';
   });
 
