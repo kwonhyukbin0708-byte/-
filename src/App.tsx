@@ -75,8 +75,9 @@ export default function App() {
   const [showAdminMenu, setShowAdminMenu] = useState<boolean>(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const hasParam = urlParams.get('admin') === 'true' || urlParams.get('setup') === 'true';
-    const isSaved = localStorage.getItem('soonsoon_show_admin_menu') === 'true';
-    return hasParam || isSaved;
+    const isSaved = localStorage.getItem('soonsoon_show_admin_menu');
+    if (isSaved === null) return true; // Default to true as requested by the user
+    return hasParam || isSaved === 'true';
   });
 
   // Listen for Ctrl+Shift+A (or Cmd+Shift+A) to toggle admin button visibility
