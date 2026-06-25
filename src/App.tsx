@@ -159,8 +159,20 @@ export default function App() {
     const saved = localStorage.getItem('soonsoon_portfolios');
     if (saved) {
       const parsed = JSON.parse(saved);
-      // If the loaded data is the old mock portfolio, migrate it
-      const hasOldMock = parsed.some((p: any) => p.title && (p.title.includes('A사 이커머스') || p.title.includes('B식품 저온') || p.title.includes('D권역 터미널 상하차')));
+      // If the loaded data is the old mock portfolio, or uses hyphen dates, migrate it
+      const hasOldMock = parsed.some((p: any) => p.title && (
+        p.title.includes('A사 이커머스') || 
+        p.title.includes('B식품 저온') || 
+        p.title.includes('D권역 터미널 상하차') ||
+        p.title.includes('CJ대한통운 서부집배점') ||
+        p.title.includes('CJ대한통운 오네본부 E2 권역 풀필먼트') ||
+        p.title.includes('오네본부') ||
+        p.title === '분류도우미 계약' ||
+        (p.id === 'port-2' && p.category !== '물류도급') ||
+        (p.id === 'port-3' && p.category !== '업무 대행') ||
+        (p.id === 'port-4' && p.category !== '인력 아웃소싱') ||
+        (p.date && p.date.includes('-'))
+      ));
       if (hasOldMock) {
         localStorage.setItem('soonsoon_portfolios', JSON.stringify(INITIAL_PORTFOLIO));
         return INITIAL_PORTFOLIO;

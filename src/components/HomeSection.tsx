@@ -255,8 +255,8 @@ export default function HomeSection({
             {/* Notice Widget */}
             <div className="lg:col-span-7 bg-white rounded-3xl p-8 border border-slate-200/50 shadow-sm space-y-6 flex flex-col justify-between">
               <div className="space-y-6">
-                <div className="flex justify-between items-end pb-3 border-b border-slate-100">
-                  <h3 className="text-xl font-bold text-slate-900 flex items-center gap-2">
+                <div className="flex flex-col sm:flex-row sm:justify-between sm:items-end gap-2 pb-3 border-b border-slate-100">
+                  <h3 className="text-xl font-bold text-slate-900 flex items-center gap-2 flex-wrap">
                     <span>공지사항 및 중요 동향</span>
                     <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${theme.lightBg} ${theme.text}`}>CMS 연동</span>
                   </h3>
@@ -264,7 +264,7 @@ export default function HomeSection({
                     onClick={() => {
                       setCurrentSection('admin');
                     }}
-                    className="text-xs text-slate-400 hover:text-slate-900 transition-colors flex items-center cursor-pointer font-semibold"
+                    className="text-xs text-slate-400 hover:text-slate-900 transition-colors flex items-center cursor-pointer font-semibold self-start sm:self-auto"
                   >
                     <span>CMS 제어센터</span>
                     <ChevronRight className="w-3.5 h-3.5" />
@@ -276,22 +276,22 @@ export default function HomeSection({
                     <div
                       key={notice.id}
                       onClick={() => setSelectedNotice(notice)}
-                      className="flex justify-between items-center p-4 rounded-2xl bg-slate-50 border border-slate-100 hover:border-slate-200 cursor-pointer transition-all duration-200 group"
+                      className="flex justify-between items-center p-4 rounded-2xl bg-slate-50 border border-slate-100 hover:border-slate-200 cursor-pointer transition-all duration-200 group gap-3"
                     >
-                      <div className="space-y-1">
-                        <div className="flex items-center space-x-2">
+                      <div className="space-y-1 flex-1 min-w-0">
+                        <div className="flex items-center space-x-2 min-w-0">
                           {notice.isImportant && (
-                            <span className="text-[10px] font-bold bg-red-100 text-red-700 border border-red-200/50 px-1.5 py-0.5 rounded-md">
+                            <span className="text-[10px] font-bold bg-red-100 text-red-700 border border-red-200/50 px-1.5 py-0.5 rounded-md shrink-0">
                               중요
                             </span>
                           )}
-                          <h4 className="text-sm font-semibold text-slate-800 group-hover:text-slate-950 transition-colors truncate max-w-sm sm:max-w-md">
+                          <h4 className="text-sm font-semibold text-slate-800 group-hover:text-slate-950 transition-colors truncate">
                             {notice.title}
                           </h4>
                         </div>
-                        <p className="text-[11px] text-slate-400 font-normal">{notice.writer} · {notice.date}</p>
+                        <p className="text-[11px] text-slate-400 font-normal truncate">{notice.writer} · {notice.date}</p>
                       </div>
-                      <ChevronRight className="w-4 h-4 text-slate-300 group-hover:text-slate-500 transition-colors" />
+                      <ChevronRight className="w-4 h-4 text-slate-300 group-hover:text-slate-500 transition-colors shrink-0" />
                     </div>
                   ))}
                 </div>
