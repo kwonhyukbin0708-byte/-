@@ -75,7 +75,7 @@ export default function HomeSection({
                 >
                   <span className={`flex h-2 w-2 rounded-full ${theme.primary} animate-pulse`}></span>
                   <span className="text-xs font-semibold text-slate-700 tracking-wider">
-                    물류·아웃소싱 명가 <span className="text-red-600 font-bold">(주)순순</span>
+                    물류·아웃소싱 <span className="text-red-600 font-bold">(주)순순</span>
                   </span>
                 </motion.div>
 
@@ -333,12 +333,41 @@ export default function HomeSection({
         </div>
       </section>
 
-      {/* Real Looking Client Partner Logos */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-        <div className="bg-white rounded-3xl p-8 border border-slate-200/50 shadow-sm text-center space-y-8">
-          <p className="text-xs font-bold uppercase tracking-widest text-slate-400">With Valued Partners</p>
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-5 items-center">
-            {[
+      {/* Real Looking Client Partner Logos with Infinite Moving Animation */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 overflow-hidden relative">
+        <style>{`
+          @keyframes marquee-left {
+            0% { transform: translateX(0%); }
+            100% { transform: translateX(-50%); }
+          }
+          @keyframes marquee-right {
+            0% { transform: translateX(-50%); }
+            100% { transform: translateX(0%); }
+          }
+          .animate-marquee-left {
+            animation: marquee-left 50s linear infinite;
+          }
+          .animate-marquee-right {
+            animation: marquee-right 50s linear infinite;
+          }
+          .pause-on-hover:hover .marquee-track {
+            animation-play-state: paused;
+          }
+        `}</style>
+
+        <div className="bg-white rounded-3xl p-8 border border-slate-200/50 shadow-sm text-center space-y-8 relative overflow-hidden">
+          <div className="space-y-1">
+            <p className="text-xs font-bold uppercase tracking-widest text-red-600">With Valued Partners</p>
+            <h3 className="text-xl sm:text-2xl font-extrabold text-slate-800 tracking-tight"><span className="text-red-600">순순</span>과 함께 성장하는 든든한 파트너사</h3>
+          </div>
+
+          {/* Left/Right fading gradient overlays for elegant transition */}
+          <div className="absolute top-0 bottom-0 left-0 w-16 sm:w-36 bg-gradient-to-r from-white via-white/70 to-transparent pointer-events-none z-10" />
+          <div className="absolute top-0 bottom-0 right-0 w-16 sm:w-36 bg-gradient-to-l from-white via-white/70 to-transparent pointer-events-none z-10" />
+
+          {/* Helper render block to avoid duplicating SVG code */}
+          {(() => {
+            const partnersList = [
               { name: '씨제이대한통운', brand: 'CJ_LOGISTICS', isCJ: true },
               { name: '롯데택배', brand: 'LOTTE_GLOBAL', isLotte: true },
               { name: '한진택배', brand: 'HANJIN_LOGISTICS', isHanjin: true },
@@ -365,63 +394,47 @@ export default function HomeSection({
               { name: '에스투워크스(주)', brand: 'S2WORKS', isS2Works: true },
               { name: '씨제이택배 거제점', brand: 'GEOJE_CJ', isGeojeCJ: true },
               { name: '옥동시찌다', brand: 'SHICHIDA_OKDONG', isOkdongShichida: true }
-            ].map((partner, idx) => (
+            ];
+
+            const renderPartnerCard = (partner: typeof partnersList[0], key: string | number) => (
               <div
-                key={idx}
-                className="p-4 rounded-2xl border border-slate-100 bg-slate-50 flex flex-col items-center justify-center space-y-2.5 grayscale hover:grayscale-0 hover:bg-white hover:border-slate-200 transition-all duration-300 min-h-[125px]"
+                key={key}
+                className="p-4 rounded-2xl border border-slate-100 bg-slate-50 flex flex-col items-center justify-center space-y-2.5 grayscale hover:grayscale-0 hover:bg-white hover:border-slate-200 transition-all duration-300 min-h-[125px] w-[180px] sm:w-[220px] shrink-0"
               >
                 {partner.isCJ ? (
                   <div className="w-14 h-8 flex items-center justify-center">
                     <svg viewBox="0 0 135 100" className="w-full h-full drop-shadow-[0_1px_1px_rgba(0,0,0,0.08)]">
-                      {/* CJ Text on the left */}
                       <text x="4" y="66" fill="#000000" fontSize="54" fontWeight="900" fontFamily="system-ui, -apple-system, sans-serif" letterSpacing="-5">CJ</text>
-                      
-                      {/* Three petals on the right */}
-                      {/* Blue petal (top-left) */}
                       <path d="M 0 8 C -11 8, -13 -10, 0 -20 C 13 -10, 11 8, 0 8 Z" fill="#0072CE" transform="translate(86, 36) rotate(-35)" />
-                      {/* Orange/Yellow petal (right) */}
                       <path d="M 0 8 C -11 8, -13 -10, 0 -20 C 13 -10, 11 8, 0 8 Z" fill="#FF9E1B" transform="translate(112, 46) rotate(60)" />
-                      {/* Red petal (bottom-right) */}
                       <path d="M 0 8 C -11 8, -13 -10, 0 -20 C 13 -10, 11 8, 0 8 Z" fill="#E41A22" transform="translate(94, 66) rotate(165)" />
                     </svg>
                   </div>
                 ) : partner.isLotte ? (
                   <div className="w-14 h-8 flex items-center justify-center">
                     <svg viewBox="0 0 140 100" className="w-full h-full drop-shadow-[0_1px_1px_rgba(0,0,0,0.08)]">
-                      {/* Lotte Red Badge */}
                       <rect x="5" y="15" width="40" height="40" rx="8" fill="#E11B22" />
-                      {/* Modern stylized Lotte 'L' (a white path inside the red badge) */}
                       <path d="M 18 27 C 18 27, 24 23, 29 27 C 32 29, 32 35, 26 41 C 21 46, 21 51, 32 51" stroke="#FFFFFF" strokeWidth="4.5" strokeLinecap="round" fill="none" />
-                      {/* LOTTE Bold text */}
                       <text x="52" y="44" fill="#1E293B" fontSize="24" fontWeight="900" fontFamily="system-ui, -apple-system, sans-serif" letterSpacing="-0.5">LOTTE</text>
-                      {/* Subtitle */}
                       <text x="52" y="55" fill="#E11B22" fontSize="9" fontWeight="700" fontFamily="system-ui, -apple-system, sans-serif" letterSpacing="0.5">글로벌로지스</text>
                     </svg>
                   </div>
                 ) : partner.isHanjin ? (
                   <div className="w-14 h-8 flex items-center justify-center">
                     <svg viewBox="0 0 140 100" className="w-full h-full drop-shadow-[0_1px_1px_rgba(0,0,0,0.08)]">
-                      {/* Hanjin Blue Logo Symbol - Globe / double ring / geometric style */}
                       <circle cx="25" cy="35" r="18" stroke="#003399" strokeWidth="4.5" fill="none" />
-                      {/* Inner diagonal line / wave */}
                       <path d="M 14 35 C 14 35, 25 25, 36 35" stroke="#003399" strokeWidth="4" strokeLinecap="round" fill="none" />
                       <path d="M 14 35 C 14 35, 25 45, 36 35" stroke="#003399" strokeWidth="4" strokeLinecap="round" fill="none" />
-                      {/* Center dot */}
                       <circle cx="25" cy="35" r="4" fill="#003399" />
-                      
-                      {/* HANJIN bold text */}
                       <text x="50" y="42" fill="#003399" fontSize="23" fontWeight="900" fontFamily="system-ui, -apple-system, sans-serif" letterSpacing="-1">HANJIN</text>
-                      {/* Subtext */}
                       <text x="50" y="53" fill="#64748B" fontSize="10" fontWeight="700" fontFamily="system-ui, -apple-system, sans-serif" letterSpacing="0">한진택배</text>
                     </svg>
                   </div>
                 ) : partner.isSaveTax ? (
                   <div className="w-14 h-8 flex items-center justify-center">
                     <svg viewBox="0 0 140 100" className="w-full h-full drop-shadow-[0_1px_1px_rgba(0,0,0,0.08)]">
-                      {/* SaveTax Shield/Growth Shape */}
                       <path d="M 12 30 L 26 18 L 40 30 L 40 45 C 40 55, 26 62, 26 62 C 26 62, 12 55, 12 45 Z" fill="#0F766E" />
                       <path d="M 20 38 L 25 43 L 33 32" stroke="#FFFFFF" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" fill="none" />
-                      {/* SaveTax text */}
                       <text x="50" y="42" fill="#0F766E" fontSize="21" fontWeight="900" fontFamily="system-ui, -apple-system, sans-serif" letterSpacing="-0.5">SaveTax</text>
                       <text x="50" y="53" fill="#64748B" fontSize="10" fontWeight="700" fontFamily="system-ui, -apple-system, sans-serif" letterSpacing="0">세이브택스</text>
                     </svg>
@@ -429,14 +442,12 @@ export default function HomeSection({
                 ) : partner.isPyeongro ? (
                   <div className="w-14 h-8 flex items-center justify-center">
                     <svg viewBox="0 0 140 100" className="w-full h-full drop-shadow-[0_1px_1px_rgba(0,0,0,0.08)]">
-                      {/* Scale of Justice */}
                       <rect x="23" y="18" width="4" height="34" rx="2" fill="#1E293B" />
                       <line x1="12" y1="26" x2="38" y2="26" stroke="#D97706" strokeWidth="4.5" strokeLinecap="round" />
                       <path d="M 12 26 L 12 42" stroke="#D97706" strokeWidth="2.5" />
                       <path d="M 7 42 C 7 47, 17 47, 17 42 Z" fill="#D97706" />
                       <path d="M 38 26 L 38 42" stroke="#D97706" strokeWidth="2.5" />
                       <path d="M 33 42 C 33 47, 43 47, 43 42 Z" fill="#D97706" />
-                      {/* Pyeongro Text */}
                       <text x="50" y="38" fill="#1E293B" fontSize="16" fontWeight="900" fontFamily="system-ui, -apple-system, sans-serif" letterSpacing="-0.5">노무법인</text>
                       <text x="50" y="54" fill="#D97706" fontSize="18" fontWeight="900" fontFamily="system-ui, -apple-system, sans-serif" letterSpacing="1">평로</text>
                     </svg>
@@ -444,11 +455,9 @@ export default function HomeSection({
                 ) : partner.isKllca ? (
                   <div className="w-14 h-8 flex items-center justify-center">
                     <svg viewBox="0 0 140 100" className="w-full h-full drop-shadow-[0_1px_1px_rgba(0,0,0,0.08)]">
-                      {/* Dynamic orbit */}
                       <circle cx="25" cy="35" r="17" stroke="#1D4ED8" strokeWidth="4" fill="none" />
                       <path d="M 8 35 C 8 20, 42 20, 42 35 C 42 50, 8 50, 8 35" stroke="#F97316" strokeWidth="3" fill="none" />
                       <path d="M 40 31 L 44 35 L 39 39" stroke="#F97316" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" fill="none" />
-                      {/* KLLCA Association Text */}
                       <text x="48" y="34" fill="#1D4ED8" fontSize="12" fontWeight="900" fontFamily="system-ui, -apple-system, 'Malgun Gothic', sans-serif" letterSpacing="-0.5">한국생활물류</text>
                       <text x="48" y="47" fill="#1E293B" fontSize="11" fontWeight="800" fontFamily="system-ui, -apple-system, 'Malgun Gothic', sans-serif" letterSpacing="-0.5">택배서비스협회</text>
                       <text x="48" y="58" fill="#F97316" fontSize="9" fontWeight="700" fontFamily="system-ui, -apple-system, sans-serif" letterSpacing="0.5">KLLCA</text>
@@ -457,10 +466,8 @@ export default function HomeSection({
                 ) : partner.isAmway ? (
                   <div className="w-14 h-8 flex items-center justify-center">
                     <svg viewBox="0 0 140 100" className="w-full h-full drop-shadow-[0_1px_1px_rgba(0,0,0,0.08)]">
-                      {/* Curved Mountain waves */}
                       <path d="M 8 48 C 16 32, 28 32, 36 48" stroke="#004B87" strokeWidth="4.5" strokeLinecap="round" fill="none" />
                       <path d="M 14 42 C 22 28, 32 28, 40 42" stroke="#00A3E0" strokeWidth="4" strokeLinecap="round" fill="none" />
-                      {/* Wordmark */}
                       <text x="48" y="42" fill="#004B87" fontSize="23" fontWeight="900" fontFamily="system-ui, -apple-system, sans-serif" letterSpacing="-1">Amway</text>
                       <text x="48" y="53" fill="#64748B" fontSize="10" fontWeight="700" fontFamily="system-ui, -apple-system, sans-serif" letterSpacing="0.5">한국암웨이</text>
                     </svg>
@@ -668,8 +675,36 @@ export default function HomeSection({
                   <span className="text-[9px] text-slate-400 font-mono uppercase tracking-wider block mt-0.5">{partner.brand}</span>
                 </div>
               </div>
-            ))}
-          </div>
+            );
+
+            // Split into two distinct rows
+            const row1 = partnersList.slice(0, 13);
+            const row2 = partnersList.slice(13);
+
+            return (
+              <div className="space-y-6 pt-4">
+                {/* Track 1: Moving Left */}
+                <div className="relative overflow-hidden py-2 select-none pause-on-hover">
+                  <div className="flex gap-5 w-max marquee-track animate-marquee-left">
+                    {/* Render first copy */}
+                    {row1.map((p, i) => renderPartnerCard(p, `r1-1-${i}`))}
+                    {/* Render second duplicate copy for infinite loops */}
+                    {row1.map((p, i) => renderPartnerCard(p, `r1-2-${i}`))}
+                  </div>
+                </div>
+
+                {/* Track 2: Moving Right */}
+                <div className="relative overflow-hidden py-2 select-none pause-on-hover">
+                  <div className="flex gap-5 w-max marquee-track animate-marquee-right">
+                    {/* Render first copy */}
+                    {row2.map((p, i) => renderPartnerCard(p, `r2-1-${i}`))}
+                    {/* Render second duplicate copy for infinite loops */}
+                    {row2.map((p, i) => renderPartnerCard(p, `r2-2-${i}`))}
+                  </div>
+                </div>
+              </div>
+            );
+          })()}
         </div>
       </section>
     </div>

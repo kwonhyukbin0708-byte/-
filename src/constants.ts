@@ -7,7 +7,7 @@ import { Notice, Portfolio, Inquiry, SiteConfig } from './types';
 import port1Img from './assets/images/ecommerce_fulfillment_hub_1782369849849.jpg';
 import port2Img from './assets/images/cj_one_d_zone_warehouse_1782370457660.jpg';
 import port3Img from './assets/images/lastmile_delivery_terminal_1782369878787.jpg';
-import port4Img from './assets/images/factory_packaging_line_1782369892243.jpg';
+import port4Img from './assets/images/parcel_sorting_line_1782378709883.jpg';
 
 export const DEFAULT_SITE_CONFIG: SiteConfig = {
   companyName: '(주)순순',
@@ -97,7 +97,7 @@ export const INITIAL_PORTFOLIO: Portfolio[] = [
   },
   {
     id: 'port-4',
-    title: 'CJ대한통운 터미널 분류도우미 공정 지원 대행',
+    title: '분류도우미 업무 대행',
     client: 'CJ대한통운',
     category: '업무 대행',
     date: '2023-02-01',
