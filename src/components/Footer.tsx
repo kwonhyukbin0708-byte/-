@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import React, { useState } from 'react';
 import { MessageSquare, Instagram, Linkedin, Phone, Mail, Printer, ShieldCheck } from 'lucide-react';
 import { SiteConfig } from '../types';
 import Logo from './Logo';
@@ -16,6 +17,14 @@ interface FooterProps {
 }
 
 export default function Footer({ config, setCurrentSection, theme, showAdminMenu = false, onOpenPolicy }: FooterProps) {
+  const [faxCopied, setFaxCopied] = useState(false);
+
+  const handleCopyFax = (e: React.MouseEvent) => {
+    e.preventDefault();
+    navigator.clipboard.writeText(config.fax || '');
+    setFaxCopied(true);
+    setTimeout(() => setFaxCopied(false), 2000);
+  };
   const handleQuickLink = (sectionId: string) => {
     setCurrentSection(sectionId);
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -126,9 +135,18 @@ export default function Footer({ config, setCurrentSection, theme, showAdminMenu
                 </a>
               </li>
               {config.fax && (
-                <li className="flex items-center space-x-2">
-                  <Printer className="w-4 h-4 text-indigo-400 shrink-0" />
-                  <span>FAX: {config.fax}</span>
+                <li className="flex items-center">
+                  <button
+                    onClick={handleCopyFax}
+                    className="flex items-center space-x-2 hover:text-white text-slate-400 transition-colors group cursor-pointer focus:outline-none text-left"
+                    title="팩스 번호 복사"
+                  >
+                    <Printer className="w-4 h-4 text-indigo-400 shrink-0 group-hover:scale-110 transition-transform" />
+                    <span className="group-hover:underline">FAX: {config.fax}</span>
+                    <span className={`text-[10px] px-1.5 py-0.5 rounded bg-slate-800 text-indigo-400 border border-indigo-500/20 transition-all duration-300 ${faxCopied ? 'opacity-100 scale-100' : 'opacity-0 scale-95 pointer-events-none'}`}>
+                      {faxCopied ? '복사 완료! ✓' : ''}
+                    </span>
+                  </button>
                 </li>
               )}
             </ul>
