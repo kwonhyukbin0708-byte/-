@@ -184,7 +184,7 @@ export default function ContactSection({ config, inquiries, addInquiry, theme }:
                 {/* FAX */}
                 {config.fax && (
                   <div className="flex items-center space-x-4 p-3 rounded-2xl bg-slate-800/10">
-                    <div className="w-10 h-10 rounded-lg flex items-center justify-center bg-slate-800 text-slate-400">
+                    <div className="w-10 h-10 rounded-lg flex items-center justify-center bg-indigo-600 text-white shadow-lg shadow-indigo-600/10">
                       <Printer className="w-5 h-5" />
                     </div>
                     <div>
@@ -196,7 +196,7 @@ export default function ContactSection({ config, inquiries, addInquiry, theme }:
 
                 {/* Headquarters */}
                 <div className="flex items-center space-x-4 p-3 rounded-2xl bg-slate-800/10">
-                  <div className="w-10 h-10 rounded-lg flex items-center justify-center bg-slate-800 text-slate-400">
+                  <div className="w-10 h-10 rounded-lg flex items-center justify-center bg-emerald-600 text-white shadow-lg shadow-emerald-600/10">
                     <MapPin className="w-5 h-5" />
                   </div>
                   <div>

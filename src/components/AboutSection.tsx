@@ -155,9 +155,15 @@ export default function AboutSection({ config, theme }: AboutSectionProps) {
 
               {/* Level 2: Board & Advisors */}
               <div className="flex justify-center items-center w-full relative">
-                <div className="absolute left-1/2 -translate-x-1/2 w-[85%] h-0.5 bg-slate-300 top-0"></div>
+                {/* Horizontal line with zero protrusion, aligned exactly with the grid column centers */}
+                <div className="absolute left-1/2 -translate-x-1/2 w-11/12 max-w-5xl h-0.5 top-0">
+                  <div className="absolute left-[12.5%] right-[12.5%] top-0 bottom-0 bg-slate-300"></div>
+                </div>
                 
-                <div className="grid grid-cols-4 gap-6 pt-8 w-11/12 max-w-5xl">
+                <div className="grid grid-cols-4 gap-6 pt-8 w-11/12 max-w-5xl relative">
+                  {/* Vertical connector line going down between 세무/회계 자문단 (Col 2) and 안전보건·준법 감시단 (Col 3) */}
+                  <div className="absolute left-1/2 -translate-x-1/2 top-0 bottom-0 w-0.5 bg-slate-300"></div>
+
                   {/* Board Group Left 1 */}
                   <div className="text-center relative">
                     <div className="absolute -top-8 left-1/2 -translate-x-1/2 w-0.5 h-8 bg-slate-300"></div>
@@ -196,9 +202,12 @@ export default function AboutSection({ config, theme }: AboutSectionProps) {
 
               {/* Level 3: Department Divisions */}
               <div className="flex justify-center items-center w-full relative">
-                <div className="absolute left-1/2 -translate-x-1/2 w-11/12 h-0.5 bg-slate-300 top-0"></div>
+                {/* Horizontal line with zero protrusion, aligned exactly with the 5 column centers */}
+                <div className="absolute left-0 right-0 h-0.5 top-0">
+                  <div className="absolute left-[10%] right-[10%] top-0 bottom-0 bg-slate-300"></div>
+                </div>
                 
-                <div className="grid grid-cols-4 gap-4 pt-8 w-full">
+                <div className="grid grid-cols-5 gap-4 pt-8 w-full">
                   
                   {/* Dept 1 */}
                   <div className="text-center relative">
@@ -210,7 +219,17 @@ export default function AboutSection({ config, theme }: AboutSectionProps) {
                     </div>
                   </div>
 
-                  {/* Dept 2 */}
+                  {/* Dept 2: New 택배사업팀 */}
+                  <div className="text-center relative">
+                    <div className="absolute -top-8 left-1/2 -translate-x-1/2 w-0.5 h-8 bg-slate-300"></div>
+                    <div className="bg-white border border-slate-200/60 rounded-2xl p-4 shadow-sm space-y-2 hover:border-slate-300 transition-colors">
+                      <span className="text-[9px] font-bold text-orange-600 bg-orange-50 border border-orange-100 px-2 py-0.5 rounded-full">택배 사업</span>
+                      <h5 className="text-xs sm:text-sm font-bold text-slate-900">택배사업팀</h5>
+                      <p className="text-[10px] text-slate-400 font-normal">분류 지원, 허브 및 대리점 관리</p>
+                    </div>
+                  </div>
+
+                  {/* Dept 3 */}
                   <div className="text-center relative">
                     <div className="absolute -top-8 left-1/2 -translate-x-1/2 w-0.5 h-8 bg-slate-300"></div>
                     <div className="bg-white border border-slate-200/60 rounded-2xl p-4 shadow-sm space-y-2 hover:border-slate-300 transition-colors">
@@ -220,7 +239,7 @@ export default function AboutSection({ config, theme }: AboutSectionProps) {
                     </div>
                   </div>
 
-                  {/* Dept 3 */}
+                  {/* Dept 4 */}
                   <div className="text-center relative">
                     <div className="absolute -top-8 left-1/2 -translate-x-1/2 w-0.5 h-8 bg-slate-300"></div>
                     <div className="bg-white border border-slate-200/60 rounded-2xl p-4 shadow-sm space-y-2 hover:border-slate-300 transition-colors">
@@ -230,7 +249,7 @@ export default function AboutSection({ config, theme }: AboutSectionProps) {
                     </div>
                   </div>
 
-                  {/* Dept 4 */}
+                  {/* Dept 5 */}
                   <div className="text-center relative">
                     <div className="absolute -top-8 left-1/2 -translate-x-1/2 w-0.5 h-8 bg-slate-300"></div>
                     <div className="bg-white border border-slate-200/60 rounded-2xl p-4 shadow-sm space-y-2 hover:border-slate-300 transition-colors">

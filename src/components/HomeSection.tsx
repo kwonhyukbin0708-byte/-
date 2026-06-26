@@ -6,6 +6,7 @@
 import { motion } from 'motion/react';
 import { ArrowRight, CheckCircle, Users, ShieldAlert, TrendingUp, ChevronRight, Award, HelpCircle } from 'lucide-react';
 import { SiteConfig, Notice, Portfolio } from '../types';
+import Logo from './Logo';
 
 interface HomeSectionProps {
   config: SiteConfig;
@@ -27,9 +28,9 @@ export default function HomeSection({
   
   // Real-time metrics
   const stats = [
-    { label: '누적 위탁 도급 규모', value: '540억+', desc: '체계적 예산 및 단가 관리' },
-    { label: '연간 누적 물동량', value: '1.4억 건+', desc: '풀필먼트 분류/출고 총량' },
-    { label: '협력 파트너사', value: '130개+', desc: '대기업 및 중견 유통사 신뢰' },
+    { label: '누적 위탁 도급 규모', value: '150억', desc: '체계적 예산 및 단가 관리' },
+    { label: '연간 누적 물동량', value: '1.4억 건+', desc: '택배 물류 도급 분류/출고 총량' },
+    { label: '협력 파트너사', value: '50+', desc: '대기업 및 중견 유통사 신뢰' },
     { label: '인력 평균 가동률', value: '99.8%', desc: '결원 즉각 대체 관리율' },
   ];
 
@@ -371,6 +372,7 @@ export default function HomeSection({
               { name: '씨제이대한통운', brand: 'CJ_LOGISTICS', isCJ: true },
               { name: '롯데택배', brand: 'LOTTE_GLOBAL', isLotte: true },
               { name: '한진택배', brand: 'HANJIN_LOGISTICS', isHanjin: true },
+              { name: '다인로지스틱스', brand: 'DAIN_LOGISTICS', isDain: true },
               { name: '세이브택스', brand: 'SAVETAX', isSaveTax: true },
               { name: '노무법인 평로', brand: 'PYEONG_RO', isPyeongro: true },
               { name: '한국생활물류택배서비스협회', brand: 'KLLCA', isKllca: true },
@@ -417,6 +419,15 @@ export default function HomeSection({
                       <path d="M 18 27 C 18 27, 24 23, 29 27 C 32 29, 32 35, 26 41 C 21 46, 21 51, 32 51" stroke="#FFFFFF" strokeWidth="4.5" strokeLinecap="round" fill="none" />
                       <text x="52" y="44" fill="#1E293B" fontSize="24" fontWeight="900" fontFamily="system-ui, -apple-system, sans-serif" letterSpacing="-0.5">LOTTE</text>
                       <text x="52" y="55" fill="#E11B22" fontSize="9" fontWeight="700" fontFamily="system-ui, -apple-system, sans-serif" letterSpacing="0.5">글로벌로지스</text>
+                    </svg>
+                  </div>
+                ) : partner.isDain ? (
+                  <div className="w-14 h-8 flex items-center justify-center">
+                    <svg viewBox="0 0 140 100" className="w-full h-full drop-shadow-[0_1px_1px_rgba(0,0,0,0.08)]">
+                      <path d="M 12 22 L 32 22 C 40 22, 45 28, 45 35 C 45 42, 40 48, 32 48 L 12 48 Z" stroke="#2563EB" strokeWidth="5" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+                      <path d="M 22 28 L 29 35 L 22 42" stroke="#10B981" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+                      <text x="50" y="38" fill="#1E293B" fontSize="18" fontWeight="900" fontFamily="system-ui, sans-serif">DAIN</text>
+                      <text x="50" y="50" fill="#2563EB" fontSize="10" fontWeight="800" fontFamily="system-ui, sans-serif" letterSpacing="0.5">다인로지스틱스</text>
                     </svg>
                   </div>
                 ) : partner.isHanjin ? (
@@ -678,8 +689,8 @@ export default function HomeSection({
             );
 
             // Split into two distinct rows
-            const row1 = partnersList.slice(0, 13);
-            const row2 = partnersList.slice(13);
+            const row1 = partnersList.slice(0, 14);
+            const row2 = partnersList.slice(14);
 
             return (
               <div className="space-y-6 pt-4">

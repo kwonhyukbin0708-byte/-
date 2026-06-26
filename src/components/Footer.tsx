@@ -12,9 +12,10 @@ interface FooterProps {
   setCurrentSection: (section: string) => void;
   theme: any;
   showAdminMenu?: boolean;
+  onOpenPolicy: (tab: 'terms' | 'privacy' | 'email') => void;
 }
 
-export default function Footer({ config, setCurrentSection, theme, showAdminMenu = false }: FooterProps) {
+export default function Footer({ config, setCurrentSection, theme, showAdminMenu = false, onOpenPolicy }: FooterProps) {
   const handleQuickLink = (sectionId: string) => {
     setCurrentSection(sectionId);
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -105,16 +106,28 @@ export default function Footer({ config, setCurrentSection, theme, showAdminMenu
             <h4 className="text-sm font-semibold text-white tracking-wider uppercase">고객 센터</h4>
             <ul className="space-y-3 text-sm text-slate-400">
               <li className="flex items-center space-x-2">
-                <Phone className={`w-4 h-4 ${theme.text}`} />
-                <span>{config.phone}</span>
+                <Phone className={`w-4 h-4 ${theme.text} shrink-0`} />
+                <a
+                  href={`tel:${config.phone}`}
+                  className="hover:text-white transition-colors cursor-pointer hover:underline focus:outline-none"
+                  title="전화 걸기"
+                >
+                  {config.phone}
+                </a>
               </li>
               <li className="flex items-center space-x-2">
-                <Mail className={`w-4 h-4 ${theme.text}`} />
-                <span>{config.email}</span>
+                <Mail className={`w-4 h-4 ${theme.text} shrink-0`} />
+                <a
+                  href={`mailto:${config.email}`}
+                  className="hover:text-white transition-colors cursor-pointer hover:underline focus:outline-none break-all"
+                  title="이메일 보내기"
+                >
+                  {config.email}
+                </a>
               </li>
               {config.fax && (
                 <li className="flex items-center space-x-2">
-                  <Printer className="w-4 h-4 text-slate-500" />
+                  <Printer className="w-4 h-4 text-indigo-400 shrink-0" />
                   <span>FAX: {config.fax}</span>
                 </li>
               )}
@@ -126,9 +139,24 @@ export default function Footer({ config, setCurrentSection, theme, showAdminMenu
         {/* Corporate Legal Declarations */}
         <div id="footer-legal" className="pt-8 text-xs text-slate-500 leading-relaxed space-y-4">
           <div className="flex flex-wrap gap-x-6 gap-y-2 text-slate-400 font-medium">
-            <a href="#" className="hover:text-white transition-colors">이용약관</a>
-            <a href="#" className="hover:text-white font-semibold text-slate-300 transition-colors">개인정보처리방침</a>
-            <a href="#" className="hover:text-white transition-colors">이메일무단수집거부</a>
+            <button
+              onClick={() => onOpenPolicy('terms')}
+              className="hover:text-white transition-colors cursor-pointer focus:outline-none"
+            >
+              이용약관
+            </button>
+            <button
+              onClick={() => onOpenPolicy('privacy')}
+              className="hover:text-white font-semibold text-slate-300 transition-colors cursor-pointer focus:outline-none"
+            >
+              개인정보처리방침
+            </button>
+            <button
+              onClick={() => onOpenPolicy('email')}
+              className="hover:text-white transition-colors cursor-pointer focus:outline-none"
+            >
+              이메일무단수집거부
+            </button>
             {showAdminMenu && (
               <button onClick={() => handleQuickLink('admin')} className="hover:text-white transition-colors text-slate-500 cursor-pointer">
                 관리자페이지로그인

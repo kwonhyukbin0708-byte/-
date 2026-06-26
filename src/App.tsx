@@ -15,6 +15,7 @@ import ServicesSection from './components/ServicesSection';
 import PortfolioSection from './components/PortfolioSection';
 import ContactSection from './components/ContactSection';
 import AdminSection from './components/AdminSection';
+import PolicyModal from './components/PolicyModal';
 
 import { SiteConfig, Notice, Portfolio, Inquiry } from './types';
 import {
@@ -142,6 +143,10 @@ export default function App() {
         parsed.accentColor = 'red';
         updated = true;
       }
+      if (parsed.kakaoLink === 'https://pf.kakao.com' || !parsed.kakaoLink || !parsed.kakaoLink.includes('_CVHFn')) {
+        parsed.kakaoLink = 'https://pf.kakao.com/_CVHFn';
+        updated = true;
+      }
       if (updated) {
         localStorage.setItem('soonsoon_config', JSON.stringify(parsed));
       }
@@ -189,6 +194,10 @@ export default function App() {
 
   // Active Notice modal state
   const [selectedNotice, setSelectedNotice] = useState<Notice | null>(null);
+
+  // Policy modal state
+  const [isPolicyOpen, setIsPolicyOpen] = useState(false);
+  const [policyTab, setPolicyTab] = useState<'terms' | 'privacy' | 'email'>('terms');
 
   // Sync to localStorage
   useEffect(() => {
@@ -352,6 +361,18 @@ export default function App() {
         setCurrentSection={setCurrentSection}
         theme={activeTheme}
         showAdminMenu={showAdminMenu}
+        onOpenPolicy={(tab) => {
+          setPolicyTab(tab);
+          setIsPolicyOpen(true);
+        }}
+      />
+
+      {/* Corporate Policies Modal Overlay */}
+      <PolicyModal
+        isOpen={isPolicyOpen}
+        onClose={() => setIsPolicyOpen(false)}
+        initialTab={policyTab}
+        theme={activeTheme}
       />
 
       {/* Notice Detail Modal Overlay */}

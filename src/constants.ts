@@ -21,7 +21,7 @@ export const DEFAULT_SITE_CONFIG: SiteConfig = {
   address: '부산광역시 해운대구 센텀동로 99, 벽산e센텀클래스원 912호',
   registrationNumber: '765-81-03215',
   ceoName: '권혁빈',
-  kakaoLink: 'https://pf.kakao.com',
+  kakaoLink: 'https://pf.kakao.com/_CVHFn',
   instagramLink: 'https://instagram.com',
   linkedinLink: 'https://linkedin.com'
 };
