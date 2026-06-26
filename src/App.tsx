@@ -324,6 +324,7 @@ export default function App() {
             setCurrentSection={setCurrentSection}
             setSelectedNotice={setSelectedNotice}
             theme={activeTheme}
+            showAdminMenu={showAdminMenu}
           />
         );
     }

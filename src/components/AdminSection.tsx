@@ -273,16 +273,13 @@ export default function AdminSection({
               <span>로그인 및 시스템 접속</span>
             </button>
 
-            <div className="bg-slate-50 border border-slate-100 rounded-xl p-4 space-y-2.5">
-              <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-50 text-amber-700 border border-amber-100">
-                <Sparkles className="w-3 h-3" /> 관리자 비밀번호 안내
+            <div className="bg-slate-50 border border-slate-100 rounded-xl p-4 space-y-2">
+              <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[10px] font-bold bg-slate-100 text-slate-700 border border-slate-200">
+                <Sparkles className="w-3 h-3" /> 관리자 시스템 안내
               </span>
               <p className="text-xs text-gray-500 leading-relaxed">
-                현재 설정된 관리자 비밀번호는 <strong className="text-gray-900 font-bold bg-amber-100 px-1 rounded">tnstns24!</strong> 입니다.
+                본 시스템은 인증된 담당자만 사용 가능합니다. 비밀번호 분실 시 개발 부서에 문의해 주시기 바랍니다.
               </p>
-              <div className="border-t border-dashed border-gray-200 my-2 pt-2 text-[10px] text-gray-400 leading-normal">
-                ※ 상용 프로덕션 환경 배포 시에는 백엔드 API 세션 제어(Firebase Auth, JWT 토큰 검증, CORS 도메인 체크) 및 데이터베이스 보안 규칙을 수립하여 외부인의 직접적인 접근을 원천 봉쇄하게 됩니다.
-              </div>
             </div>
           </form>
         </div>

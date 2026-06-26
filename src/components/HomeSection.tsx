@@ -15,6 +15,7 @@ interface HomeSectionProps {
   setCurrentSection: (section: string) => void;
   setSelectedNotice: (notice: Notice | null) => void;
   theme: any;
+  showAdminMenu?: boolean;
 }
 
 export default function HomeSection({
@@ -23,7 +24,8 @@ export default function HomeSection({
   portfolios,
   setCurrentSection,
   setSelectedNotice,
-  theme
+  theme,
+  showAdminMenu = false
 }: HomeSectionProps) {
   
   // Real-time metrics
@@ -259,17 +261,21 @@ export default function HomeSection({
                 <div className="flex flex-col sm:flex-row sm:justify-between sm:items-end gap-2 pb-3 border-b border-slate-100">
                   <h3 className="text-xl font-bold text-slate-900 flex items-center gap-2 flex-wrap">
                     <span>공지사항 및 중요 동향</span>
-                    <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${theme.lightBg} ${theme.text}`}>CMS 연동</span>
+                    {showAdminMenu && (
+                      <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${theme.lightBg} ${theme.text}`}>CMS 연동</span>
+                    )}
                   </h3>
-                  <button
-                    onClick={() => {
-                      setCurrentSection('admin');
-                    }}
-                    className="text-xs text-slate-400 hover:text-slate-900 transition-colors flex items-center cursor-pointer font-semibold self-start sm:self-auto"
-                  >
-                    <span>CMS 제어센터</span>
-                    <ChevronRight className="w-3.5 h-3.5" />
-                  </button>
+                  {showAdminMenu && (
+                    <button
+                      onClick={() => {
+                        setCurrentSection('admin');
+                      }}
+                      className="text-xs text-slate-400 hover:text-slate-900 transition-colors flex items-center cursor-pointer font-semibold self-start sm:self-auto"
+                    >
+                      <span>CMS 제어센터</span>
+                      <ChevronRight className="w-3.5 h-3.5" />
+                    </button>
+                  )}
                 </div>
 
                 <div className="space-y-3">
