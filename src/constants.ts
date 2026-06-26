@@ -71,9 +71,14 @@ export const INITIAL_PORTFOLIO: Portfolio[] = [
     client: 'CJ대한통운',
     category: '물류도급',
     date: '2023.07.01',
-    description: 'CJ대한통운 ONE(O-NE) 본부 E2 권역의 풀필먼트 및 허브 분류 도급 전 과정을 총괄 운영합니다. 숙련된 인적 자원과 효율적인 공정 분담을 통해 실시간 입출고 정확도 99.9%를 달성하고 고효율 현장 제어를 정착시켰습니다.',
+    description: 'CJ대한통운 O-NE 본부 E2 권역의 주요 서브/허브 터미널 내 하차, 분류, 상차 도급 전 과정을 총괄 운영합니다. 터미널 공정에 최적화된 숙련 인력 배치를 통해 당일 간선차 정시 출차율 99.9%를 달성하고, 실시간 물량 변동에 유연하게 대응하는 고효율 터미널 현장 제어 시스템을 정착시켰습니다.',
     imageUrl: port1Img,
-    highlights: ['실시간 입출고 정확도 99.9%', 'O-NE 오퍼레이션 완벽 매칭', '분류 가공 리드타임 단축', '현장 오차율 ZERO화 실현']
+    highlights: [
+      '간선차 당일 정시 출차율 99.9% 달성',
+      'O-NE 터미널 공정(하차·분류·상차) 완벽 오퍼레이션',
+      '고속 스캔 및 자동 소터(Sorter) 오분류 Zero화 실현',
+      '실시간 물동량 변동에 따른 현장 인력 적기 투입률 100%'
+    ]
   },
   {
     id: 'port-2',
@@ -89,7 +94,7 @@ export const INITIAL_PORTFOLIO: Portfolio[] = [
     id: 'port-3',
     title: 'CJ대한통운 울산동구 서부집배점 운영',
     client: 'CJ대한통운 울산동구 서부집배점',
-    category: '업무 대행',
+    category: '3PL',
     date: '2026.01.01',
     description: '울산동구 서부집배점의 배송 및 라스트마일 허브 오퍼레이터 전문 인력 도급 및 순환 관리를 책임 운영합니다. 현장 대체 인력의 신속한 조달 시스템을 통해 결원율 0%를 기록하며 일일 배송 출발 마감 타임을 완벽 준수하고 있습니다.',
     imageUrl: port3Img,
@@ -126,7 +131,7 @@ export const INITIAL_INQUIRIES: Inquiry[] = [
     requester: '이지혜 과장',
     phone: '010-9876-5432',
     email: 'jhlee@samjung.co.kr',
-    serviceType: '창고 관리',
+    serviceType: '3PL',
     message: '용인 저온 창고의 콜드체인 포장 및 야간 분류 도급 가능 여부와 단가표 확인을 희망합니다. 현재 일일 평균 3천 건 가량 유통되고 있습니다.',
     budget: '월 5,000만원 내외',
     date: '2026-06-22',
@@ -136,25 +141,25 @@ export const INITIAL_INQUIRIES: Inquiry[] = [
 
 export const SERVICE_DETAILS = [
   {
-    title: '물류도급 (Logistics Contract)',
+    title: '물류도급 (Terminal Operation Contract)',
     icon: 'Package',
-    description: '입고부터 재고 관리, 피킹, 패킹, 최종 출고까지 물류센터 내 모든 공정을 최적의 KPI 지표에 맞춰 책임지고 위탁 운영합니다.',
+    description: '대량의 택배 물량이 집중되는 허브(Hub) 및 서브(Sub) 터미널의 하차, 분류, 상차 전 공정을 신속하고 정확하게 책임 위탁 운영합니다.',
     details: [
-      '풀필먼트 센터 전 과정 맞춤형 위탁 운영',
-      '전문 현장 관리자(Supervisor) 밀착 배치',
-      'WMS(창고관리시스템) 및 PDA 정밀 리딩 연동',
-      '지속적인 공정 분석을 통한 리드 타임 단축'
+      '택배 터미널 전 공정 맞춤형 위탁 운영 (하차·분류·상차)',
+      '터미널 특화 현장 관리자(Supervisor) 밀착 배치를 통한 인력 탄력 운영',
+      '자동 분류(Sorter) 및 고속 스캔 시스템 연동을 통한 오분류 Zero화',
+      '공정 병목 해결을 통한 실시간 정시성 확보 및 간선차 출차 타임 단축'
     ]
   },
   {
-    title: '창고 관리 (Warehouse Control)',
+    title: '3PL 및 대리점 집하 연계 서비스 (3PL & Agency Pickup Service)',
     icon: 'Warehouse',
-    description: '상온, 저온, 냉동 등 최적의 창고 컨디션 유지와 엄격한 재고 실사 시스템을 결합하여 자산 가치 유실을 방지합니다.',
+    description: '거래처 물량의 안전한 보관부터 정밀한 포장, 출고, 그리고 당사 택배 대리점을 통한 다이렉트 집하까지 원스톱(One-Stop) 3PL 솔루션을 제공합니다.',
     details: [
-      '선입선출(FIFO) 기반 유통 기한/배치 관리',
-      '콜드체인 냉동·냉장 정밀 검수 시스템',
-      '정기 재고 실사 대행 및 손실률 미니멀화',
-      '소방 및 산업안전 관리 가이드라인 완벽 이행'
+      '택배 대리점 자체 인프라와 결합된 보관·포장·출고·집하 원스톱 운영',
+      '고객사 맞춤형 포장(Packing) 임가공 및 철저한 검수 시스템',
+      '실시간 재고 매칭 및 정기 실사를 통한 자산 손실률 Zero화',
+      '창고-대리점 직결 프로세스로 집하 시간 단축 및 당일 출고 경쟁력 강화'
     ]
   },
   {

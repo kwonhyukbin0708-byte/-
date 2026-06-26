@@ -56,12 +56,12 @@ export default function AboutSection({ config, theme }: AboutSectionProps) {
           {/* Right: CEO Message details inside white Bento card */}
           <div className="lg:col-span-7 bg-white rounded-3xl p-8 sm:p-10 border border-slate-200/50 shadow-sm space-y-6">
             <h2 className="text-xs font-bold uppercase tracking-widest text-slate-400">CEO Message</h2>
-            <h3 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight leading-tight">
+            <h3 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight leading-tight break-keep">
               안녕하십니까, <br />
               <span className="text-red-600 font-bold">{isCompany(config.companyName) ? config.companyName : '(주)순순'}</span> 대표 {config.ceoName}입니다.
             </h3>
             
-            <div className="text-slate-600 space-y-4 text-xs sm:text-sm leading-relaxed font-normal">
+            <div className="text-slate-600 space-y-4 text-xs sm:text-sm leading-relaxed font-normal break-keep">
               <p>
                 오늘날 급변하는 유통 및 제조 시장에서 물류 도급 및 인재 아웃소싱은 더 이상 단순한 대행이 아닙니다. 비즈니스의 성공 유무를 결정짓는 중추이자, 핵심 전략 자산입니다.
               </p>
@@ -85,8 +85,8 @@ export default function AboutSection({ config, theme }: AboutSectionProps) {
         <div className="bg-white rounded-3xl p-8 sm:p-12 border border-slate-200/50 shadow-sm space-y-12">
           <div className="text-center max-w-2xl mx-auto space-y-4">
             <h2 className="text-xs font-bold uppercase tracking-widest text-slate-400">Our Vision</h2>
-            <h3 className="text-3xl font-bold tracking-tight text-slate-900">핵심 가치 및 미래 비전</h3>
-            <p className="text-sm text-slate-500"><span className="text-red-600 font-bold">순순</span>이 추구하는 세 가지 경영 지표는 고객사의 신뢰와 효율로 보답합니다.</p>
+            <h3 className="text-3xl font-bold tracking-tight text-slate-900 break-keep">핵심 가치 및 미래 비전</h3>
+            <p className="text-sm text-slate-500 break-keep"><span className="text-red-600 font-bold">순순</span>이 추구하는 세 가지 경영 지표는 고객사의 신뢰와 효율로 보답합니다.</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -120,8 +120,8 @@ export default function AboutSection({ config, theme }: AboutSectionProps) {
                     <IconComp className={`w-6 h-6 ${val.color}`} />
                   </div>
                   <div className="space-y-2">
-                    <h4 className="text-base sm:text-lg font-bold text-slate-900">{val.title}</h4>
-                    <p className="text-xs sm:text-sm text-slate-500 leading-relaxed font-normal">{val.desc}</p>
+                    <h4 className="text-base sm:text-lg font-bold text-slate-900 break-keep">{val.title}</h4>
+                    <p className="text-xs sm:text-sm text-slate-500 leading-relaxed font-normal break-keep">{val.desc}</p>
                   </div>
                 </div>
               );
@@ -287,10 +287,10 @@ export default function AboutSection({ config, theme }: AboutSectionProps) {
                   <div key={index} className="flex flex-col sm:flex-row items-center justify-between relative">
                     
                     {/* Left block (Only displays on even indexes on desktop) */}
-                    <div className={`w-full sm:w-5/12 ${isEven ? 'sm:text-right' : 'sm:order-last sm:text-left'} space-y-1 order-last sm:order-none px-4`}>
+                    <div className={`w-full sm:w-5/12 ${isEven ? 'sm:text-right' : 'sm:order-last sm:text-left'} space-y-1 order-last sm:order-none px-4 break-keep`}>
                       <span className={`text-xl font-bold font-mono ${theme.text}`}>{item.year}</span>
-                      <h4 className="text-base font-bold text-slate-900">{item.title}</h4>
-                      <p className="text-xs text-slate-500 leading-relaxed font-normal">{item.desc}</p>
+                      <h4 className="text-base font-bold text-slate-900 break-keep">{item.title}</h4>
+                      <p className="text-xs text-slate-500 leading-relaxed font-normal break-keep">{item.desc}</p>
                     </div>
 
                     {/* Timeline Center Dot */}

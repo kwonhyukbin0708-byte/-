@@ -717,7 +717,7 @@ export default function AdminSection({
                       onChange={(e) => setPortCategory(e.target.value)}
                       className="w-full px-4 py-2 bg-white border border-gray-200 rounded-lg text-xs font-semibold focus:outline-none"
                     >
-                      {['물류도급', '창고 관리', '인력 아웃소싱', '업무 대행'].map((cat) => (
+                      {['물류도급', '3PL', '인력 아웃소싱', '업무 대행'].map((cat) => (
                         <option key={cat} value={cat}>{cat}</option>
                       ))}
                     </select>

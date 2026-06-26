@@ -12,15 +12,16 @@ interface ContactSectionProps {
   inquiries: Inquiry[];
   addInquiry: (inq: Omit<Inquiry, 'id' | 'date' | 'status'>) => Inquiry;
   theme: any;
+  preselectedServiceType?: string;
 }
 
-export default function ContactSection({ config, inquiries, addInquiry, theme }: ContactSectionProps) {
+export default function ContactSection({ config, inquiries, addInquiry, theme, preselectedServiceType }: ContactSectionProps) {
   // Form States
   const [companyName, setCompanyName] = useState('');
   const [requester, setRequester] = useState('');
   const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
-  const [serviceType, setServiceType] = useState('물류도급');
+  const [serviceType, setServiceType] = React.useState(preselectedServiceType || '물류도급');
   const [budget, setBudget] = useState('협의 후 결정');
   const [message, setMessage] = useState('');
   
@@ -42,7 +43,7 @@ export default function ContactSection({ config, inquiries, addInquiry, theme }:
     setTimeout(() => setFaxCopied(false), 2000);
   };
 
-  const serviceOptions = ['물류도급', '창고 관리', '인력 아웃소싱', '업무 대행', '기타'];
+  const serviceOptions = ['물류도급', '3PL', '인력 아웃소싱', '업무 대행', '기타'];
   const budgetOptions = ['협의 후 결정', '월 1,000만원 미만', '월 1,000만원 ~ 3,000만원', '월 3,000만원 ~ 5,000만원', '월 5,000만원 이상'];
 
   // Handle inquiry submit
@@ -195,7 +196,7 @@ export default function ContactSection({ config, inquiries, addInquiry, theme }:
                   <button
                     type="button"
                     onClick={handleCopyFax}
-                    className="w-full text-left flex items-center justify-between p-3 rounded-2xl bg-slate-800/40 hover:bg-slate-800/85 transition-all duration-200 group cursor-pointer border border-transparent hover:border-indigo-500/20"
+                    className="w-full text-left flex flex-col sm:flex-row sm:items-center sm:justify-between p-4 rounded-2xl bg-slate-800/40 hover:bg-slate-800/85 transition-all duration-200 group cursor-pointer border border-transparent hover:border-indigo-500/20 gap-3"
                   >
                     <div className="flex items-center space-x-4">
                       <div className="w-10 h-10 rounded-lg flex items-center justify-center bg-indigo-600 text-white shadow-lg shadow-indigo-600/10 shrink-0">
@@ -206,7 +207,7 @@ export default function ContactSection({ config, inquiries, addInquiry, theme }:
                         <p className="text-sm font-bold font-mono text-slate-300 group-hover:text-indigo-400 transition-colors">{config.fax}</p>
                       </div>
                     </div>
-                    <span className="text-[10px] font-bold px-2 py-1 rounded bg-slate-800 text-slate-400 group-hover:text-indigo-400 group-hover:bg-indigo-950 transition-all select-none">
+                    <span className="text-[10px] font-bold px-2.5 py-1.5 rounded bg-slate-800 text-slate-400 group-hover:text-indigo-400 group-hover:bg-indigo-950 transition-all select-none self-start sm:self-auto shrink-0 whitespace-nowrap">
                       {faxCopied ? '복사 완료! ✓' : '팩스 복사'}
                     </span>
                   </button>
@@ -217,7 +218,7 @@ export default function ContactSection({ config, inquiries, addInquiry, theme }:
                   href={`https://search.naver.com/search.naver?query=${encodeURIComponent(config.address)}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full text-left flex items-center justify-between p-3 rounded-2xl bg-slate-800/40 hover:bg-slate-800/85 transition-all duration-200 group cursor-pointer border border-transparent hover:border-emerald-500/20"
+                  className="w-full text-left flex flex-col sm:flex-row sm:items-center sm:justify-between p-4 rounded-2xl bg-slate-800/40 hover:bg-slate-800/85 transition-all duration-200 group cursor-pointer border border-transparent hover:border-emerald-500/20 gap-3"
                 >
                   <div className="flex items-center space-x-4">
                     <div className="w-10 h-10 rounded-lg flex items-center justify-center bg-emerald-600 text-white shadow-lg shadow-emerald-600/10 shrink-0">
@@ -225,10 +226,10 @@ export default function ContactSection({ config, inquiries, addInquiry, theme }:
                     </div>
                     <div>
                       <p className="text-[10px] text-slate-500 font-mono font-bold">OFFICE ADDRESS</p>
-                      <p className="text-xs font-bold text-slate-300 leading-relaxed group-hover:text-emerald-400 transition-colors">{config.address}</p>
+                      <p className="text-xs font-bold text-slate-300 leading-relaxed group-hover:text-emerald-400 transition-colors break-keep">{config.address}</p>
                     </div>
                   </div>
-                  <span className="text-[10px] font-bold px-2 py-1 rounded bg-slate-800 text-slate-400 group-hover:text-emerald-400 group-hover:bg-emerald-950 transition-all shrink-0 select-none">
+                  <span className="text-[10px] font-bold px-2.5 py-1.5 rounded bg-slate-800 text-slate-400 group-hover:text-emerald-400 group-hover:bg-emerald-950 transition-all select-none self-start sm:self-auto shrink-0 whitespace-nowrap">
                     지도로 보기 ↗
                   </span>
                 </a>

@@ -3,8 +3,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import { useState } from 'react';
 import { motion } from 'motion/react';
-import { ArrowRight, CheckCircle, Users, ShieldAlert, TrendingUp, ChevronRight, Award, HelpCircle } from 'lucide-react';
+import { ArrowRight, CheckCircle, Users, ShieldAlert, TrendingUp, ChevronRight, Award, HelpCircle, ChevronDown } from 'lucide-react';
 import { SiteConfig, Notice, Portfolio } from '../types';
 import Logo from './Logo';
 
@@ -27,6 +28,34 @@ export default function HomeSection({
   theme,
   showAdminMenu = false
 }: HomeSectionProps) {
+  const [activeDetails, setActiveDetails] = useState<Record<number, boolean>>({
+    1: false,
+    2: false,
+    3: false
+  });
+  const [hoveredDetails, setHoveredDetails] = useState<Record<number, boolean>>({
+    1: false,
+    2: false,
+    3: false
+  });
+
+  const toggleDetail = (index: number) => {
+    setActiveDetails(prev => ({
+      ...prev,
+      [index]: !prev[index]
+    }));
+  };
+
+  const setHoverDetail = (index: number, isHovered: boolean) => {
+    setHoveredDetails(prev => ({
+      ...prev,
+      [index]: isHovered
+    }));
+  };
+
+  const isVisible = (index: number) => {
+    return activeDetails[index] || hoveredDetails[index];
+  };
   
   // Real-time metrics
   const stats = [
@@ -38,24 +67,24 @@ export default function HomeSection({
 
   const strengths = [
     {
-      title: '정밀한 무결점 운영',
-      desc: '독자적인 3단계 공정 매뉴얼과 정기 실사 시스템을 결합하여 오배송율 및 불량률을 최저치(0.02%)로 유지합니다.',
-      icon: CheckCircle
-    },
-    {
-      title: '유연한 인력 공급망',
-      desc: '자체 아웃소싱 교육망과 전국적 전담 인재 데이터베이스를 통해 가동 지연 리스크를 원천적으로 방지합니다.',
+      title: '현장 맞춤형 전문 인력 매칭',
+      desc: '물류 현장의 특성을 완벽히 이해하는 준비된 인력을 매칭하며, 풍부한 도급 및 아웃소싱 노하우로 피크 시즌의 급격한 물량 변동에도 안정적 공급을 보장합니다.',
       icon: Users
     },
     {
-      title: '완벽한 근로 리스크 제로',
-      desc: '근로 기준법 및 중대재해처벌법 요건을 완벽하게 충족하며, 분기별 노무 정밀 컨설팅을 상시 진행합니다.',
+      title: '종합 물류 시너지 솔루션',
+      desc: '자체 운영관리팀과 택배사업팀의 유기적인 시너지를 통해, 현장 인력 케어부터 실제 물류 배송 연계 프로세스까지 단일 채널로 원스톱 최적화합니다.',
+      icon: TrendingUp
+    },
+    {
+      title: '고정비 절감 및 리스크 관리',
+      desc: '인력 채용, 교육, 급여, 4대 보험 등 복잡한 행정 및 노무 리스크를 순순이 100% 전담하여 고정비를 유연한 유동비로 전환해 드립니다.',
       icon: ShieldAlert
     },
     {
-      title: '체계적인 원가 절감',
-      desc: '작업 효율을 정량적으로 계측하여 비효율적인 동선과 자재 낭비를 최소화하고 성과를 투명하게 환원합니다.',
-      icon: TrendingUp
+      title: '철저한 현장 중심 밀착 케어',
+      desc: '단순 공급을 넘어 현장 관리자의 밀착 케어로 인력 이탈을 방지하고 생산성을 높여, 오배송율 감소와 높은 업무 연속성 및 신뢰도를 달성합니다.',
+      icon: CheckCircle
     }
   ];
 
@@ -87,7 +116,7 @@ export default function HomeSection({
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6, delay: 0.1 }}
-                    className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 tracking-tight leading-tight"
+                    className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 tracking-tight leading-tight break-keep"
                   >
                     {config.mainSlogan.split(',').map((part, i) => (
                       <span key={i} className="block">
@@ -101,7 +130,7 @@ export default function HomeSection({
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6, delay: 0.2 }}
-                    className="text-base text-slate-500 max-w-xl font-normal leading-relaxed"
+                    className="text-base text-slate-500 max-w-xl font-normal leading-relaxed break-keep"
                   >
                     {config.subSlogan}
                   </motion.p>
@@ -152,35 +181,130 @@ export default function HomeSection({
                   <span className="text-xs bg-white/10 text-slate-300 px-2.5 py-1 rounded-full font-medium">실시간 집계</span>
                 </div>
 
-                <div className="relative z-10 space-y-4">
-                  <div>
-                    <div className="flex justify-between text-xs font-semibold text-slate-300 mb-1">
-                      <span>물류 오배송율 관리 지표</span>
-                      <span className={theme.text}>0.02% (업계 최고 수준)</span>
+                <div className="text-[11px] text-slate-400 font-normal leading-normal bg-slate-950/30 p-2.5 rounded-xl border border-slate-800/40 relative z-10 flex items-start gap-1.5">
+                  <span className="text-red-400">💡</span>
+                  <span>항목을 클릭하거나 마우스를 올려 세부 관리 지표를 확인해 보세요.</span>
+                </div>
+
+                <div className="relative z-10 space-y-5">
+                  {/* Indicator 1 */}
+                  <div 
+                    className="space-y-1.5 p-2.5 -mx-2.5 rounded-xl transition-all duration-200 hover:bg-slate-800/30 cursor-pointer group"
+                    onClick={() => toggleDetail(1)}
+                    onMouseEnter={() => setHoverDetail(1, true)}
+                    onMouseLeave={() => setHoverDetail(1, false)}
+                  >
+                    <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center text-xs font-semibold text-slate-300 gap-1 sm:gap-2">
+                      <span className="flex items-center gap-1 group-hover:text-white transition-colors break-keep">
+                        인력 운영 효율성 및 공급 안정성 지표
+                        <ChevronRight className={`w-3.5 h-3.5 shrink-0 transition-transform duration-200 ${isVisible(1) ? 'rotate-90 text-red-500' : 'text-slate-500 group-hover:text-slate-300'}`} />
+                      </span>
+                      <span className={`${theme.text} font-bold whitespace-nowrap shrink-0`}>98% (요청 대비 적기 투입)</span>
                     </div>
-                    <div className="w-full bg-slate-800 rounded-full h-2">
-                      <div className={`h-2 rounded-full ${theme.primary}`} style={{ width: '98%' }}></div>
+                    <div className="w-full bg-slate-800 rounded-full h-1.5">
+                      <div className={`h-1.5 rounded-full ${theme.primary}`} style={{ width: '98%' }}></div>
                     </div>
+                    <motion.div
+                      initial={{ height: 0, opacity: 0, marginTop: 0 }}
+                      animate={isVisible(1) ? { height: 'auto', opacity: 1, marginTop: 8 } : { height: 0, opacity: 0, marginTop: 0 }}
+                      transition={{ duration: 0.2, ease: 'easeInOut' }}
+                      className="overflow-hidden"
+                    >
+                      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-2 pt-1 text-[10px] text-slate-400 font-normal leading-tight border-t border-slate-800/30 pt-2 break-keep">
+                        <div>
+                          <span className="block text-slate-500 font-semibold mb-0.5">인력 공급률 (Fill Rate)</span>
+                          <span className="text-slate-300">요청 대비 적기 투입 98%</span>
+                        </div>
+                        <div>
+                          <span className="block text-slate-500 font-semibold mb-0.5">근속 및 이탈률 관리</span>
+                          <span className="text-slate-300">현장 숙련도·고용 안정화</span>
+                        </div>
+                        <div>
+                          <span className="block text-slate-500 font-semibold mb-0.5">물동량 인력 탄력성</span>
+                          <span className="text-slate-300">피크 시즌 상시 신속 대응</span>
+                        </div>
+                      </div>
+                    </motion.div>
                   </div>
 
-                  <div>
-                    <div className="flex justify-between text-xs font-semibold text-slate-300 mb-1">
-                      <span>근로 규정 및 노동 안전 준수</span>
-                      <span className="text-emerald-400 font-semibold">100% 무결점</span>
+                  {/* Indicator 2 */}
+                  <div 
+                    className="space-y-1.5 p-2.5 -mx-2.5 rounded-xl transition-all duration-200 hover:bg-slate-800/30 cursor-pointer group pt-2.5 border-t border-slate-800/40"
+                    onClick={() => toggleDetail(2)}
+                    onMouseEnter={() => setHoverDetail(2, true)}
+                    onMouseLeave={() => setHoverDetail(2, false)}
+                  >
+                    <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center text-xs font-semibold text-slate-300 gap-1 sm:gap-2">
+                      <span className="flex items-center gap-1 group-hover:text-white transition-colors break-keep">
+                        인사·노무 리스크 제로(Zero) 및 환경·안전(HSE) 준수율
+                        <ChevronRight className={`w-3.5 h-3.5 shrink-0 transition-transform duration-200 ${isVisible(2) ? 'rotate-90 text-emerald-400' : 'text-slate-500 group-hover:text-slate-300'}`} />
+                      </span>
+                      <span className="text-emerald-400 font-bold whitespace-nowrap shrink-0">100% 무결점</span>
                     </div>
-                    <div className="w-full bg-slate-800 rounded-full h-2">
-                      <div className="h-2 rounded-full bg-emerald-500" style={{ width: '100%' }}></div>
+                    <div className="w-full bg-slate-800 rounded-full h-1.5">
+                      <div className="h-1.5 rounded-full bg-emerald-500" style={{ width: '100%' }}></div>
                     </div>
+                    <motion.div
+                      initial={{ height: 0, opacity: 0, marginTop: 0 }}
+                      animate={isVisible(2) ? { height: 'auto', opacity: 1, marginTop: 8 } : { height: 0, opacity: 0, marginTop: 0 }}
+                      transition={{ duration: 0.2, ease: 'easeInOut' }}
+                      className="overflow-hidden"
+                    >
+                      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-2 pt-1 text-[10px] text-slate-400 font-normal leading-tight border-t border-slate-800/30 pt-2 break-keep">
+                        <div>
+                          <span className="block text-slate-500 font-semibold mb-0.5">노무 리스크 발생률(0%)</span>
+                          <span className="text-slate-300">근로기준법 완벽 준수</span>
+                        </div>
+                        <div>
+                          <span className="block text-slate-500 font-semibold mb-0.5">안전사고 발생률</span>
+                          <span className="text-slate-300">현장 사고 및 재해 Zero</span>
+                        </div>
+                        <div>
+                          <span className="block text-slate-500 font-semibold mb-0.5">안전·보건 교육 이수율</span>
+                          <span className="text-slate-300">정기 안전 교육 100%</span>
+                        </div>
+                      </div>
+                    </motion.div>
                   </div>
 
-                  <div>
-                    <div className="flex justify-between text-xs font-semibold text-slate-300 mb-1">
-                      <span>현장 전문 파트 매니저 매칭률</span>
-                      <span className="text-blue-400 font-semibold">99.8% 달성</span>
+                  {/* Indicator 3 */}
+                  <div 
+                    className="space-y-1.5 p-2.5 -mx-2.5 rounded-xl transition-all duration-200 hover:bg-slate-800/30 cursor-pointer group pt-2.5 border-t border-slate-800/40"
+                    onClick={() => toggleDetail(3)}
+                    onMouseEnter={() => setHoverDetail(3, true)}
+                    onMouseLeave={() => setHoverDetail(3, false)}
+                  >
+                    <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center text-xs font-semibold text-slate-300 gap-1 sm:gap-2">
+                      <span className="flex items-center gap-1 group-hover:text-white transition-colors break-keep">
+                        현장 밀착형 전문 관리자(PM) 배치 및 현장 안정화 지표
+                        <ChevronRight className={`w-3.5 h-3.5 shrink-0 transition-transform duration-200 ${isVisible(3) ? 'rotate-90 text-blue-400' : 'text-slate-500 group-hover:text-slate-300'}`} />
+                      </span>
+                      <span className="text-blue-400 font-bold whitespace-nowrap shrink-0">99.8% 달성</span>
                     </div>
-                    <div className="w-full bg-slate-800 rounded-full h-2">
-                      <div className="h-2 rounded-full bg-blue-500" style={{ width: '99.8%' }}></div>
+                    <div className="w-full bg-slate-800 rounded-full h-1.5">
+                      <div className="h-1.5 rounded-full bg-blue-500" style={{ width: '99.8%' }}></div>
                     </div>
+                    <motion.div
+                      initial={{ height: 0, opacity: 0, marginTop: 0 }}
+                      animate={isVisible(3) ? { height: 'auto', opacity: 1, marginTop: 8 } : { height: 0, opacity: 0, marginTop: 0 }}
+                      transition={{ duration: 0.2, ease: 'easeInOut' }}
+                      className="overflow-hidden"
+                    >
+                      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-2 pt-1 text-[10px] text-slate-400 font-normal leading-tight border-t border-slate-800/30 pt-2 break-keep">
+                        <div>
+                          <span className="block text-slate-500 font-semibold mb-0.5">전담 PM 배치율</span>
+                          <span className="text-slate-300">신규·기존 현장 99.8%</span>
+                        </div>
+                        <div>
+                          <span className="block text-slate-500 font-semibold mb-0.5">고객 소통 만족도</span>
+                          <span className="text-slate-300">실시간 이슈 즉각 조치</span>
+                        </div>
+                        <div>
+                          <span className="block text-slate-500 font-semibold mb-0.5">현장 생산성 향상</span>
+                          <span className="text-slate-300">업무 오차 최소화 달성</span>
+                        </div>
+                      </div>
+                    </motion.div>
                   </div>
                 </div>
 
@@ -204,10 +328,10 @@ export default function HomeSection({
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
           {stats.map((stat, idx) => (
-            <div key={idx} id={`stat-${idx}`} className="bg-white rounded-3xl p-6 border border-slate-200/50 shadow-sm text-center space-y-2 hover:shadow-md transition-all duration-300">
-              <p className="text-xs font-bold text-slate-400 tracking-wider uppercase">{stat.label}</p>
-              <p className={`text-3xl sm:text-4xl font-extrabold tracking-tight ${theme.text}`}>{stat.value}</p>
-              <p className="text-xs text-slate-500 font-medium">{stat.desc}</p>
+            <div key={idx} id={`stat-${idx}`} className="bg-white rounded-3xl p-6 border border-slate-200/50 shadow-sm text-center space-y-2 hover:shadow-md transition-all duration-300 flex flex-col justify-between">
+              <p className="text-xs font-bold text-slate-400 tracking-wider uppercase break-keep">{stat.label}</p>
+              <p className={`text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight ${theme.text} whitespace-nowrap`}>{stat.value}</p>
+              <p className="text-xs text-slate-500 font-medium break-keep">{stat.desc}</p>
             </div>
           ))}
         </div>
@@ -218,12 +342,12 @@ export default function HomeSection({
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
           <div className="text-center max-w-2xl mx-auto space-y-4">
             <h2 className="text-xs font-bold uppercase tracking-widest text-slate-400">Our Core Value</h2>
-            <p className="text-3xl sm:text-4xl font-bold tracking-tight text-slate-900">
+            <p className="text-3xl sm:text-4xl font-bold tracking-tight text-slate-900 break-keep">
               기업들이 물류 파트너로 <br />
               <span className="text-red-600 font-extrabold">(주)순순</span>을 선택하는 이유
             </p>
-            <p className="text-sm text-slate-500">
-              차별화된 정밀 관리와 현장 리스크 최소화 역량으로 최적의 비용 대비 생산성을 보여드립니다.
+            <p className="text-sm text-slate-500 break-keep">
+              차별화된 현장 중심 관리와 현장 리스크 최소화 역량으로 최적의 비용 대비 생산성을 보여드립니다.
             </p>
           </div>
 
@@ -240,8 +364,8 @@ export default function HomeSection({
                     <IconComp className={`w-6 h-6 ${theme.text}`} />
                   </div>
                   <div className="space-y-2">
-                    <h3 className="text-lg font-bold text-slate-900 group-hover:text-slate-950 transition-colors duration-200">{str.title}</h3>
-                    <p className="text-sm text-slate-500 leading-relaxed font-normal">{str.desc}</p>
+                    <h3 className="text-lg font-bold text-slate-900 group-hover:text-slate-950 transition-colors duration-200 break-keep">{str.title}</h3>
+                    <p className="text-sm text-slate-500 leading-relaxed font-normal break-keep">{str.desc}</p>
                   </div>
                 </div>
               );
@@ -311,11 +435,11 @@ export default function HomeSection({
               
               <div className="relative z-10 space-y-4">
                 <span className="text-[10px] uppercase font-bold tracking-widest bg-white/20 px-2.5 py-1 rounded-full text-white inline-block">Inquiry Portal</span>
-                <h4 className="text-2xl font-bold tracking-tight leading-snug text-white">
+                <h4 className="text-2xl font-bold tracking-tight leading-snug text-white break-keep">
                   귀사에 최적화된 맞춤형 <br />
                   도급 설계서를 받아보세요.
                 </h4>
-                <p className="text-xs text-white/80 leading-relaxed font-normal">
+                <p className="text-xs text-white/80 leading-relaxed font-normal break-keep">
                   <strong className="text-amber-300 font-extrabold">(주)순순</strong>의 전담 수석 컨설턴트들이 원가 설계 및 효율 분석 모델을 통해 무료로 초안 포트폴리오를 제공합니다.
                 </p>
               </div>

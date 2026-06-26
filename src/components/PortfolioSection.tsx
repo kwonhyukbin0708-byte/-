@@ -18,7 +18,7 @@ export default function PortfolioSection({ config, portfolios, theme }: Portfoli
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [activeProject, setActiveProject] = useState<Portfolio | null>(null);
 
-  const categories = ['전체', '물류도급', '창고 관리', '인력 아웃소싱', '업무 대행'];
+  const categories = ['전체', '물류도급', '3PL', '인력 아웃소싱', '업무 대행'];
 
   // Filtering Logic
   const filteredPortfolios = portfolios.filter((item) => {
@@ -57,7 +57,7 @@ export default function PortfolioSection({ config, portfolios, theme }: Portfoli
                   key={cat}
                   id={`cat-tab-${cat}`}
                   onClick={() => setSelectedCategory(cat)}
-                  className={`px-4 py-2 rounded-xl text-xs font-semibold cursor-pointer transition-all duration-200 ${
+                  className={`px-4 py-2 rounded-xl text-xs font-semibold cursor-pointer transition-all duration-200 whitespace-nowrap ${
                     isActive
                       ? `${theme.primary} text-white shadow-sm`
                       : 'bg-slate-50 text-slate-600 border border-slate-200/60 hover:bg-slate-100'
@@ -120,11 +120,11 @@ export default function PortfolioSection({ config, portfolios, theme }: Portfoli
                       <span className="font-semibold">{item.client}</span>
                     </div>
 
-                    <h4 className="text-base sm:text-lg font-bold text-slate-900 group-hover:text-slate-950 transition-colors duration-200 line-clamp-1">
+                    <h4 className="text-base sm:text-lg font-bold text-slate-900 group-hover:text-slate-950 transition-colors duration-200 line-clamp-1 break-keep">
                       {item.title}
                     </h4>
 
-                    <p className="text-xs text-slate-500 leading-relaxed font-normal line-clamp-3">
+                    <p className="text-xs text-slate-500 leading-relaxed font-normal line-clamp-3 break-keep">
                       {item.description}
                     </p>
                   </div>
@@ -134,7 +134,7 @@ export default function PortfolioSection({ config, portfolios, theme }: Portfoli
                     <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Core Highlights</p>
                     <div className="flex flex-wrap gap-1.5">
                       {item.highlights.slice(0, 3).map((hl, idx) => (
-                        <span key={idx} className="text-[10px] bg-slate-50 text-slate-600 border border-slate-200/60 px-2 py-0.5 rounded-md">
+                        <span key={idx} className="text-[10px] bg-slate-50 text-slate-600 border border-slate-200/60 px-2 py-0.5 rounded-md whitespace-nowrap">
                           {hl}
                         </span>
                       ))}
@@ -144,11 +144,11 @@ export default function PortfolioSection({ config, portfolios, theme }: Portfoli
 
                 {/* Footer link */}
                 <div className="px-6 py-4 bg-slate-50 border-t border-slate-100/50 flex justify-between items-center text-xs font-semibold text-slate-700">
-                  <span className="flex items-center space-x-1">
+                  <span className="flex items-center space-x-1 whitespace-nowrap">
                     <Calendar className="w-3.5 h-3.5 text-slate-400" />
-                    <span>운영 개시: {item.date}</span>
+                    <span className="whitespace-nowrap">운영 개시: {item.date}</span>
                   </span>
-                  <span className={`flex items-center space-x-1 ${theme.text}`}>
+                  <span className={`flex items-center space-x-1 ${theme.text} whitespace-nowrap shrink-0`}>
                     <span>상세 실적서 보기</span>
                     <ArrowUpRight className="w-3.5 h-3.5" />
                   </span>
@@ -218,7 +218,7 @@ export default function PortfolioSection({ config, portfolios, theme }: Portfoli
               {/* Description */}
               <div className="space-y-2">
                 <h5 className="text-sm font-bold text-slate-900">운영 성과 및 프로젝트 개요</h5>
-                <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-normal whitespace-pre-line">
+                <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-normal whitespace-pre-line break-keep">
                   {activeProject.description}
                 </p>
               </div>
@@ -228,9 +228,9 @@ export default function PortfolioSection({ config, portfolios, theme }: Portfoli
                 <h5 className="text-sm font-bold text-slate-900 uppercase tracking-wide">수행 성과 성적표 (KPI 기준)</h5>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                   {activeProject.highlights.map((hl, idx) => (
-                    <div key={idx} className="flex items-start space-x-2 text-xs text-slate-700 bg-slate-50/60 border border-slate-100 p-3 rounded-xl font-semibold">
+                    <div key={idx} className="flex items-start space-x-2 text-xs text-slate-700 bg-slate-50/60 border border-slate-100 p-3 rounded-xl font-semibold break-keep">
                       <span className={`w-1.5 h-1.5 rounded-full mt-1.5 shrink-0 ${theme.primary}`}></span>
-                      <span className="leading-relaxed">{hl}</span>
+                      <span className="leading-relaxed break-keep">{hl}</span>
                     </div>
                   ))}
                 </div>

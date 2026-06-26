@@ -14,9 +14,17 @@ interface FooterProps {
   theme: any;
   showAdminMenu?: boolean;
   onOpenPolicy: (tab: 'terms' | 'privacy' | 'email') => void;
+  onToggleAdminMenu?: () => void;
 }
 
-export default function Footer({ config, setCurrentSection, theme, showAdminMenu = false, onOpenPolicy }: FooterProps) {
+export default function Footer({
+  config,
+  setCurrentSection,
+  theme,
+  showAdminMenu = false,
+  onOpenPolicy,
+  onToggleAdminMenu
+}: FooterProps) {
   const [faxCopied, setFaxCopied] = useState(false);
 
   const handleCopyFax = (e: React.MouseEvent) => {
@@ -37,7 +45,12 @@ export default function Footer({ config, setCurrentSection, theme, showAdminMenu
           
           {/* Brand Info */}
           <div id="footer-col-brand" className="md:col-span-2 space-y-4">
-            <div className="flex items-center space-x-2 cursor-pointer" onClick={() => handleQuickLink('home')}>
+            <div 
+              className="flex items-center space-x-2 cursor-pointer select-none" 
+              onClick={() => handleQuickLink('home')}
+              onDoubleClick={onToggleAdminMenu}
+              title="더블클릭하여 CMS 제어센터 켜기/끄기"
+            >
               <div className={`w-8 h-8 rounded flex items-center justify-center p-1 ${theme.primary} text-white shadow-sm`}>
                 <Logo className="w-full h-full" />
               </div>
@@ -181,7 +194,11 @@ export default function Footer({ config, setCurrentSection, theme, showAdminMenu
               </button>
             )}
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-2 gap-x-4 border-t border-slate-800/50 pt-4">
+          <div 
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-2 gap-x-4 border-t border-slate-800/50 pt-4 cursor-help select-none"
+            onDoubleClick={onToggleAdminMenu}
+            title="더블클릭하여 CMS 제어센터 켜기/끄기"
+          >
             <p>상호: {config.companyNameEng} | 대표이사: {config.ceoName}</p>
             <p>사업자등록번호: {config.registrationNumber}</p>
             <p>주소: {config.address}</p>

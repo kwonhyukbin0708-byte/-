@@ -71,30 +71,40 @@ export const COLOR_THEMES = {
 
 export default function App() {
   const [currentSection, setCurrentSection] = useState<string>('home');
+  const [selectedServiceType, setSelectedServiceType] = useState<string>('물류도급');
 
   // Hidden admin menu visibility state
   const [showAdminMenu, setShowAdminMenu] = useState<boolean>(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const hasParam = urlParams.get('admin') === 'true' || urlParams.get('setup') === 'true';
-    const isSaved = localStorage.getItem('soonsoon_show_admin_menu');
-    if (isSaved === null || isSaved === 'true') {
-      // Force disable/hide it now as requested by the user
-      localStorage.setItem('soonsoon_show_admin_menu', 'false');
-      return hasParam;
-    }
-    return hasParam || isSaved === 'true';
+    localStorage.setItem('soonsoon_show_admin_menu', 'false');
+    return hasParam;
   });
 
-  // Listen for Ctrl+Shift+A (or Cmd+Shift+A) to toggle admin button visibility
+  const toggleAdminMenu = () => {
+    setShowAdminMenu((prev) => {
+      const next = !prev;
+      localStorage.setItem('soonsoon_show_admin_menu', next ? 'true' : 'false');
+      return next;
+    });
+  };
+
+  // Listen for Ctrl+Alt+K (Mac: Cmd+Option+K) to toggle admin button visibility
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key.toLowerCase() === 'a') {
+      const isCtrlOrMeta = e.ctrlKey || e.metaKey;
+      const isAlt = e.altKey;
+      const isShift = e.shiftKey;
+      const key = e.key.toLowerCase();
+
+      // Primary: Ctrl+Alt+K / Cmd+Alt(Option)+K
+      // Fallback: Ctrl+Shift+K
+      if (
+        (isCtrlOrMeta && isAlt && key === 'k') ||
+        (isCtrlOrMeta && isShift && key === 'k')
+      ) {
         e.preventDefault();
-        setShowAdminMenu((prev) => {
-          const next = !prev;
-          localStorage.setItem('soonsoon_show_admin_menu', next ? 'true' : 'false');
-          return next;
-        });
+        toggleAdminMenu();
       }
     };
     window.addEventListener('keydown', handleKeyDown);
@@ -174,7 +184,7 @@ export default function App() {
         p.title.includes('오네본부') ||
         p.title === '분류도우미 계약' ||
         (p.id === 'port-2' && p.category !== '물류도급') ||
-        (p.id === 'port-3' && p.category !== '업무 대행') ||
+        (p.id === 'port-3' && p.category !== '3PL') ||
         (p.id === 'port-4' && p.category !== '인력 아웃소싱') ||
         (p.date && p.date.includes('-'))
       ));
@@ -270,6 +280,7 @@ export default function App() {
             setCurrentSection={setCurrentSection}
             setSelectedNotice={setSelectedNotice}
             theme={activeTheme}
+            showAdminMenu={showAdminMenu}
           />
         );
       case 'about':
@@ -279,6 +290,10 @@ export default function App() {
           <ServicesSection
             config={config}
             setCurrentSection={setCurrentSection}
+            onNavigateToContact={(serviceType) => {
+              setSelectedServiceType(serviceType);
+              setCurrentSection('contact');
+            }}
             theme={activeTheme}
           />
         );
@@ -297,6 +312,7 @@ export default function App() {
             inquiries={inquiries}
             addInquiry={addInquiry}
             theme={activeTheme}
+            preselectedServiceType={selectedServiceType}
           />
         );
       case 'admin':
@@ -366,6 +382,7 @@ export default function App() {
           setPolicyTab(tab);
           setIsPolicyOpen(true);
         }}
+        onToggleAdminMenu={toggleAdminMenu}
       />
 
       {/* Corporate Policies Modal Overlay */}
