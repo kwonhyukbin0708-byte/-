@@ -25,6 +25,13 @@ export default function ContactSection({ config, inquiries, addInquiry, theme, p
   const [budget, setBudget] = useState('협의 후 결정');
   const [message, setMessage] = useState('');
   
+  // Sync serviceType when preselectedServiceType prop changes
+  React.useEffect(() => {
+    if (preselectedServiceType) {
+      setServiceType(preselectedServiceType);
+    }
+  }, [preselectedServiceType]);
+  
   // Feedback states
   const [successTicket, setSuccessTicket] = useState<Inquiry | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
