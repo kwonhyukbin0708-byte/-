@@ -167,7 +167,15 @@ export default function App() {
 
   const [notices, setNotices] = useState<Notice[]>(() => {
     const saved = localStorage.getItem('soonsoon_notices');
-    return saved ? JSON.parse(saved) : INITIAL_NOTICES;
+    if (saved) {
+      const parsed: Notice[] = JSON.parse(saved);
+      const filtered = parsed.filter(n => !n.title.includes('ISO') && n.id !== 'notice-2');
+      if (filtered.length !== parsed.length) {
+        localStorage.setItem('soonsoon_notices', JSON.stringify(filtered));
+      }
+      return filtered;
+    }
+    return INITIAL_NOTICES;
   });
 
   const [portfolios, setPortfolios] = useState<Portfolio[]>(() => {
